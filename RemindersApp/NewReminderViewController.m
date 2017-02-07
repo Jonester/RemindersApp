@@ -56,10 +56,11 @@
     if (![context save:&error]) {
         NSLog(@"Save Failed: %@", error.localizedDescription);
     }
-    
+    }
+
     [self.delegate newReminderViewControllerDidAdd];
     [self dismissViewControllerAnimated:YES completion:nil];
-    }
+
     
 }
 
