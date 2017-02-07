@@ -61,9 +61,14 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="wuq-BG-oSW">
-                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="29Q-z2-j5E">
+                        <barButtonItem key="leftBarButtonItem" systemItem="edit" id="29Q-z2-j5E">
                             <connections>
                                 <segue destination="12X-XK-2yN" kind="show" identifier="NewReminderViewController" id="V8B-gG-hkf"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="zof-Qs-U3M">
+                            <connections>
+                                <action selector="doneButton:" destination="oR4-ne-Jel" id="Ijt-vB-1Yn"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -381,9 +386,11 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="endTime" destination="2Vy-f3-p0K" id="txa-GB-bAG"/>
                         <outlet property="reminderDetails" destination="jI8-u2-r04" id="HY4-ih-RfC"/>
                         <outlet property="reminderImage" destination="d0V-yk-quJ" id="Ahr-TR-w19"/>
                         <outlet property="reminderTitle" destination="Mgt-Cy-EzO" id="mvV-dg-nt1"/>
+                        <outlet property="startTime" destination="jt4-yU-XZY" id="jOA-kK-WJz"/>
                         <outlet property="timesPerDayLabel" destination="IuZ-Df-LQg" id="owZ-U6-oRY"/>
                     </connections>
                 </viewController>
@@ -451,7 +458,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Eg-r3-yAO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2295.1999999999998" y="984.55772113943033"/>
+            <point key="canvasLocation" x="2302" y="1022"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="3z3-Sh-rnb">

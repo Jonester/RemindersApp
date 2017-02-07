@@ -15,6 +15,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *reminderDetails;
 @property (weak, nonatomic) IBOutlet UIImageView *reminderImage;
 @property (weak, nonatomic) IBOutlet UILabel *timesPerDayLabel;
+@property (weak, nonatomic) IBOutlet UIDatePicker *startTime;
+@property (weak, nonatomic) IBOutlet UIDatePicker *endTime;
 
 @end
 

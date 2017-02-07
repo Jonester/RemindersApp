@@ -20,7 +20,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *detailImage;
 
 @property (strong, nonatomic) Reminders *reminder;
-//@property (strong, nonatomic) MasterTableViewController *mtvc;
 
 @end
 
@@ -50,6 +49,9 @@
         NewReminderViewController *nrvc = [segue destinationViewController];
         nrvc.reminder = self.reminder;
     }
+}
+- (IBAction)doneButton:(UIBarButtonItem *)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end
