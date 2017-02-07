@@ -7,15 +7,13 @@
 //
 
 #import "MasterTableViewController.h"
-#import "ReminderManager.h"
 #import "NewReminderViewController.h"
 #import "AppDelegate.h"
 #import "ReminderTableViewCell.h"
+#import "DetailViewController.h"
 
 @interface MasterTableViewController () <NewReminderViewControllerDelegate>
 
-//@property (strong, nonatomic) ReminderManager *manager;
-@property (strong, nonatomic) NSArray *remindersArray;
 @end
 
 @implementation MasterTableViewController
@@ -73,6 +71,15 @@
         UINavigationController *navigationController = segue.destinationViewController;
         NewReminderViewController *newReminderViewController = [navigationController viewControllers][0];
         newReminderViewController.delegate = self;
+    }
+    if ([segue.identifier isEqualToString:@"DetailViewController"]) {
+        
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        
+        Reminder *reminder = self.remindersArray[indexPath.row];
+        UINavigationController *nav = segue.destinationViewController;
+        DetailViewController *dvc = nav.viewControllers[0];
+        [dvc displayDetailView:reminder];
     }
   
 }

@@ -7,7 +7,6 @@
 //
 
 #import "NewReminderViewController.h"
-#import "ReminderManager.h"
 #import "AppDelegate.h"
 
 @interface NewReminderViewController ()
@@ -17,11 +16,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *reminderImage;
 @property (weak, nonatomic) IBOutlet UILabel *timesPerDayLabel;
 
-
-//@property (strong, nonatomic) ReminderManager *manager;
-
-
-
 @end
 
 @implementation NewReminderViewController
@@ -29,7 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-   // self.manager = [ReminderManager new];
+    // self.manager = [ReminderManager new];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -40,7 +34,7 @@
 - (IBAction)newReminder:(UIBarButtonItem *)sender {
     NSString *title = self.reminderTitle.text;
     UIImage *image = [UIImage imageNamed:@"front"];
-  
+    
     
     NSString *details = self.reminderDetails.text;
     NSInteger displayFrequency = self.timesPerDayLabel.text.integerValue;
@@ -57,6 +51,7 @@
         NSLog(@"Save Failed: %@", error.localizedDescription);
     }
     [self.delegate newReminderViewControllerDidAdd];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)reminderTimesPerDay:(UIStepper *)sender {
@@ -64,8 +59,11 @@
 }
 
 - (IBAction)cancelReminder:(UIBarButtonItem *)sender {
-   [self.delegate newReminderViewControllerDidCancel:[self reminders]];    
-   
+    if (self.reminders != nil) {
+    [self.delegate newReminderViewControllerDidCancel:self.reminders];
+    }
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
 }
 
 - (NSManagedObjectContext *)getContext {

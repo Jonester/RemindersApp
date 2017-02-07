@@ -15,8 +15,6 @@
 		3C42F3071E49185D0015F1FC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C42F3051E49185D0015F1FC /* LaunchScreen.storyboard */; };
 		3C42F3101E49191E0015F1FC /* MasterTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C42F30F1E49191E0015F1FC /* MasterTableViewController.m */; };
 		3C42F3131E491A590015F1FC /* NewReminderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C42F3121E491A590015F1FC /* NewReminderViewController.m */; };
-		3C42F3161E491FFC0015F1FC /* Reminder.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C42F3151E491FFC0015F1FC /* Reminder.m */; };
-		3C42F3191E4922700015F1FC /* ReminderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C42F3181E4922700015F1FC /* ReminderManager.m */; };
 		3C42F31C1E4924A70015F1FC /* ReminderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C42F31B1E4924A70015F1FC /* ReminderTableViewCell.m */; };
 		3C42F31F1E4937730015F1FC /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C42F31E1E4937730015F1FC /* DetailViewController.m */; };
 		A1B5DF7B1E494E4000B553F8 /* Reminders+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A1B5DF791E494E4000B553F8 /* Reminders+CoreDataProperties.m */; };
@@ -36,10 +34,6 @@
 		3C42F30F1E49191E0015F1FC /* MasterTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterTableViewController.m; sourceTree = "<group>"; };
 		3C42F3111E491A590015F1FC /* NewReminderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewReminderViewController.h; sourceTree = "<group>"; };
 		3C42F3121E491A590015F1FC /* NewReminderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewReminderViewController.m; sourceTree = "<group>"; };
-		3C42F3141E491FFC0015F1FC /* Reminder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reminder.h; path = ../Reminder.h; sourceTree = "<group>"; };
-		3C42F3151E491FFC0015F1FC /* Reminder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reminder.m; path = ../Reminder.m; sourceTree = "<group>"; };
-		3C42F3171E4922700015F1FC /* ReminderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReminderManager.h; sourceTree = "<group>"; };
-		3C42F3181E4922700015F1FC /* ReminderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReminderManager.m; sourceTree = "<group>"; };
 		3C42F31A1E4924A70015F1FC /* ReminderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReminderTableViewCell.h; sourceTree = "<group>"; };
 		3C42F31B1E4924A70015F1FC /* ReminderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReminderTableViewCell.m; sourceTree = "<group>"; };
 		3C42F31D1E4937730015F1FC /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
@@ -84,10 +78,6 @@
 		3C42F2F31E49185D0015F1FC /* RemindersApp */ = {
 			isa = PBXGroup;
 			children = (
-				3C42F3141E491FFC0015F1FC /* Reminder.h */,
-				3C42F3151E491FFC0015F1FC /* Reminder.m */,
-				3C42F3171E4922700015F1FC /* ReminderManager.h */,
-				3C42F3181E4922700015F1FC /* ReminderManager.m */,
 				3C42F31D1E4937730015F1FC /* DetailViewController.h */,
 				3C42F31E1E4937730015F1FC /* DetailViewController.m */,
 				3C42F3111E491A590015F1FC /* NewReminderViewController.h */,
@@ -188,7 +178,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C42F2F91E49185D0015F1FC /* AppDelegate.m in Sources */,
-				3C42F3161E491FFC0015F1FC /* Reminder.m in Sources */,
 				3C42F31F1E4937730015F1FC /* DetailViewController.m in Sources */,
 				A1B5DF7B1E494E4000B553F8 /* Reminders+CoreDataProperties.m in Sources */,
 				3C42F3101E49191E0015F1FC /* MasterTableViewController.m in Sources */,
@@ -196,7 +185,6 @@
 				3C42F3131E491A590015F1FC /* NewReminderViewController.m in Sources */,
 				3C42F2F61E49185D0015F1FC /* main.m in Sources */,
 				3C42F3021E49185D0015F1FC /* RemindersApp.xcdatamodeld in Sources */,
-				3C42F3191E4922700015F1FC /* ReminderManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
