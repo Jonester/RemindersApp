@@ -11,6 +11,6 @@
 
 @interface ReminderManager : NSObject
 
-@property (strong, nonatomic) NSMutableArray *remindersArray;
+//@property (strong, nonatomic) NSArray *remindersArray; //change back to mutable array just had conversion issues
 
 @end
