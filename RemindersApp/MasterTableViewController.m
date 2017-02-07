@@ -28,7 +28,6 @@
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Reminders" inManagedObjectContext:context];
     [fetchRequest setEntity:entity];
     
-    
     NSError *error = nil;
     NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
     if (fetchedObjects == nil) {
@@ -36,6 +35,10 @@
     }
     self.remindersArray = fetchedObjects;
     
+    [self.tableView reloadData];
+}
+
+-(void)viewWillAppear:(BOOL)animated {
     [self.tableView reloadData];
 }
 
