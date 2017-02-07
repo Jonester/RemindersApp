@@ -7,9 +7,9 @@
 //
 
 #import "NewReminderViewController.h"
-#import "Reminder.h"
 #import "ReminderManager.h"
 #import "PhotoManager.h"
+#import "AppDelegate.h"
 
 @interface NewReminderViewController ()
 
@@ -37,11 +37,26 @@
 }
 
 - (IBAction)newReminder:(UIBarButtonItem *)sender {
-    Reminder *reminder = [[Reminder alloc]initWithTitle:self.reminderTitle.text Body:self.reminderDetails.text Image:self.reminderImage.image displayFrequency:[self.timesPerDayLabel.text integerValue] uniqueID:@"FirstID" hasImage:NO];
+    NSString *title = self.reminderTitle.text;
+    UIImage *image = [UIImage imageNamed:@"front"];
+  
     
     [self.remindManager.remindersArray addObject:reminder];
+    NSString *details = self.reminderDetails.text;
+    NSInteger displayFrequency = self.timesPerDayLabel.text.integerValue;
     
-    [self dismissViewControllerAnimated:YES completion:nil];
+    NSManagedObjectContext *context = [self getContext];
+    Reminders *reminders = [NSEntityDescription insertNewObjectForEntityForName:@"Reminders" inManagedObjectContext:context];
+    reminders.title = title;
+    reminders.details = details;
+    reminders.uniqueID = [[NSUUID UUID] UUIDString];
+    reminders.displayFrequency = displayFrequency;
+    reminders.image = UIImagePNGRepresentation(image);
+    NSError *error = nil;
+    if (![context save:&error]) {
+        NSLog(@"Save Failed: %@", error.localizedDescription);
+    }
+    [self.delegate newReminderViewControllerDidAdd];
 }
 
 - (IBAction)reminderTimesPerDay:(UIStepper *)sender {
@@ -49,7 +64,8 @@
 }
 
 - (IBAction)cancelReminder:(UIBarButtonItem *)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+   [self.delegate newReminderViewControllerDidCancel:[self reminders]];    
+   
 }
 
 - (IBAction)takePhoto:(UIButton *)sender {
@@ -64,5 +80,15 @@
     
 }
 
+- (NSManagedObjectContext *)getContext {
+    return [self getContainer].viewContext;
+}
 
+- (NSPersistentContainer *)getContainer{
+    return [self appDelegate].persistentContainer;
+}
+
+- (AppDelegate *)appDelegate {
+    return (AppDelegate *)[[UIApplication sharedApplication] delegate];
+}
 @end

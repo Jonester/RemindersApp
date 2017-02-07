@@ -24,9 +24,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.detailTitle.text = self.reminder.title;
-    self.detailDetails.text = self.reminder.details;
-    self.detailImage.image = self.reminder.image;
+  //  self.detailTitle.text = self.reminder.title;
+  //  self.detailDetails.text = self.reminder.details;
+  //  self.detailImage.image = self.reminder.image;
     
 }
 
