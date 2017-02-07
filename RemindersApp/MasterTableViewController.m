@@ -7,14 +7,13 @@
 //
 
 #import "MasterTableViewController.h"
-#import "ReminderManager.h"
 #import "NewReminderViewController.h"
 #import "AppDelegate.h"
 #import "ReminderTableViewCell.h"
+#import "DetailViewController.h"
 
 @interface MasterTableViewController () <NewReminderViewControllerDelegate>
 
-//@property (strong, nonatomic) ReminderManager *manager;
 @end
 
 @implementation MasterTableViewController
@@ -29,7 +28,6 @@
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Reminders" inManagedObjectContext:context];
     [fetchRequest setEntity:entity];
     
-    
     NSError *error = nil;
     NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
     if (fetchedObjects == nil) {
@@ -37,6 +35,10 @@
     }
     self.remindersArray = fetchedObjects;
     
+    [self.tableView reloadData];
+}
+
+-(void)viewWillAppear:(BOOL)animated {
     [self.tableView reloadData];
 }
 
@@ -72,6 +74,15 @@
         UINavigationController *navigationController = segue.destinationViewController;
         NewReminderViewController *newReminderViewController = [navigationController viewControllers][0];
         newReminderViewController.delegate = self;
+    }
+    if ([segue.identifier isEqualToString:@"DetailViewController"]) {
+        
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        
+        Reminder *reminder = self.remindersArray[indexPath.row];
+        UINavigationController *nav = segue.destinationViewController;
+        DetailViewController *dvc = nav.viewControllers[0];
+        [dvc displayDetailView:reminder];
     }
   
 }

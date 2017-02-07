@@ -7,7 +7,11 @@
 //
 
 #import "DetailViewController.h"
-#import "Reminder.h"
+#import "Reminders+CoreDataClass.h"
+#import "Reminders+CoreDataProperties.h"
+#import "MasterTableViewController.h"
+#import "AppDelegate.h"
+#import "NewReminderViewController.h"
 
 @interface DetailViewController ()
 
@@ -15,7 +19,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *detailDetails;
 @property (weak, nonatomic) IBOutlet UIImageView *detailImage;
 
-@property (strong, nonatomic) Reminder *reminder;
+@property (strong, nonatomic) Reminders *reminder;
+//@property (strong, nonatomic) MasterTableViewController *mtvc;
 
 @end
 
@@ -24,10 +29,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-  //  self.detailTitle.text = self.reminder.title;
-  //  self.detailDetails.text = self.reminder.details;
-  //  self.detailImage.image = self.reminder.image;
-    
+    self.detailTitle.text = self.reminder.title;
+    self.detailDetails.text = self.reminder.details;
+    self.detailImage.image = [UIImage imageWithData:self.reminder.image];    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -35,9 +39,16 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)displayDetailView:(Reminder*)reminder {
+- (void)displayDetailView:(Reminders*)reminder {
     if (_reminder != reminder) {
         _reminder = reminder;
+    }
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([[segue identifier] isEqualToString:@"NewReminderViewController"])  {
+        NewReminderViewController *nrvc = [segue destinationViewController];
+        nrvc.reminder = self.reminder;
     }
 }
 

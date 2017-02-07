@@ -7,8 +7,6 @@
 //
 
 #import "NewReminderViewController.h"
-#import "ReminderManager.h"
-#import "PhotoManager.h"
 #import "AppDelegate.h"
 
 @interface NewReminderViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
@@ -17,9 +15,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *reminderDetails;
 @property (weak, nonatomic) IBOutlet UIImageView *reminderImage;
 @property (weak, nonatomic) IBOutlet UILabel *timesPerDayLabel;
-@property (strong, nonatomic) ReminderManager *remindManager;
-@property (strong, nonatomic) PhotoManager *photoManager;
-
 
 @end
 
@@ -28,8 +23,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.remindManager = [ReminderManager new];
-    self.photoManager = [PhotoManager new];
+    [self displayReminderForEdit:self.reminder];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -38,9 +33,15 @@
 }
 
 - (IBAction)newReminder:(UIBarButtonItem *)sender {
+    
+    if (self.reminder != nil) {
+        
+        self.reminder.title = self.reminderTitle.text;
+        self.reminder.details = self.reminderDetails.text;
+        self.reminder.image = [NSData dataWithData:UIImagePNGRepresentation(self.reminderImage.image)];
+    } else {
     NSString *title = self.reminderTitle.text;
     UIImage *image = self.reminderImage.image;
-    
     NSString *details = self.reminderDetails.text;
     NSInteger displayFrequency = self.timesPerDayLabel.text.integerValue;
     
@@ -55,7 +56,12 @@
     if (![context save:&error]) {
         NSLog(@"Save Failed: %@", error.localizedDescription);
     }
+    }
+
     [self.delegate newReminderViewControllerDidAdd];
+    [self dismissViewControllerAnimated:YES completion:nil];
+
+    
 }
 
 - (IBAction)reminderTimesPerDay:(UIStepper *)sender {
@@ -63,8 +69,11 @@
 }
 
 - (IBAction)cancelReminder:(UIBarButtonItem *)sender {
-   [self.delegate newReminderViewControllerDidCancel:[self reminders]];    
-   
+    if (self.reminder != nil) {
+    [self.delegate newReminderViewControllerDidCancel:self.reminder];
+    }
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
 }
 
 - (IBAction)takePhoto:(UIButton *)sender {
@@ -107,4 +116,11 @@
 - (AppDelegate *)appDelegate {
     return (AppDelegate *)[[UIApplication sharedApplication] delegate];
 }
+
+-(void)displayReminderForEdit: (Reminders *)reminder {
+    self.reminderTitle.text = reminder.title;
+    self.reminderDetails.text = reminder.details;
+    self.reminderImage.image = [UIImage imageWithData:reminder.image];
+}
+
 @end
