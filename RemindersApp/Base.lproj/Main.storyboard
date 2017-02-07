@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="0kN-vB-avC">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C68" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="0kN-vB-avC">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -81,16 +81,16 @@
         <scene sceneID="qFo-KP-q7x">
             <objects>
                 <tableViewController id="vqo-Mn-DNZ" customClass="MasterTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="0N7-gM-4r9">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="96" sectionHeaderHeight="28" sectionFooterHeight="28" id="0N7-gM-4r9">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="100" id="iSD-0W-Qw3" customClass="ReminderTableViewCell">
-                                <rect key="frame" x="0.0" y="28" width="375" height="100"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="96" id="iSD-0W-Qw3" customClass="ReminderTableViewCell">
+                                <rect key="frame" x="0.0" y="28" width="375" height="96"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iSD-0W-Qw3" id="qU8-MJ-LYg">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="99"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="95"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FxT-Xn-g3a">
@@ -146,14 +146,14 @@
                     <navigationItem key="navigationItem" id="G9N-qA-RvG">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="jEc-Q6-g9z">
                             <connections>
-                                <segue destination="TJJ-Bm-bZf" kind="presentation" identifier="NewReminderViewController" id="nCo-L7-w4h"/>
+                                <segue destination="TJJ-Bm-bZf" kind="presentation" identifier="addreminder" id="nCo-L7-w4h"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ktv-ok-xLQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="721" y="281"/>
+            <point key="canvasLocation" x="720.79999999999995" y="280.20989505247377"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="O9c-xa-2Kc">
@@ -296,6 +296,7 @@
         <!--Navigation Controller-->
         <scene sceneID="3z3-Sh-rnb">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pGM-Ky-H7M" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="TJJ-Bm-bZf" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="rAF-kn-lKH">
@@ -307,7 +308,6 @@
                         <segue destination="12X-XK-2yN" kind="relationship" relationship="rootViewController" id="sdV-gu-hag"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="pGM-Ky-H7M" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1513" y="279"/>
         </scene>
@@ -331,6 +331,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="V8B-gG-hkf"/>
+        <segue reference="sdV-gu-hag"/>
     </inferredMetricsTieBreakers>
 </document>

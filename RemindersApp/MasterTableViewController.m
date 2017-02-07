@@ -8,11 +8,14 @@
 
 #import "MasterTableViewController.h"
 #import "ReminderManager.h"
+#import "NewReminderViewController.h"
+#import "AppDelegate.h"
+#import "ReminderTableViewCell.h"
 
-@interface MasterTableViewController ()
+@interface MasterTableViewController () <NewReminderViewControllerDelegate>
 
-@property (strong, nonatomic) ReminderManager *manager;
-
+//@property (strong, nonatomic) ReminderManager *manager;
+@property (strong, nonatomic) NSArray *remindersArray;
 @end
 
 @implementation MasterTableViewController
@@ -20,13 +23,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.manager = [ReminderManager new];
+   // self.manager = [ReminderManager new];
+    [super viewDidLoad];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSManagedObjectContext *context = [self getContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Reminders" inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    NSError *error = nil;
+    NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+    if (fetchedObjects == nil) {
+        NSLog(@"error: %@", error.localizedDescription);
+    }
+    self.remindersArray = fetchedObjects;
+    
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -43,60 +55,64 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
-    return self.manager.remindersArray.count;
+    return self.remindersArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    ReminderTableViewCell *cell = (ReminderTableViewCell *) [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
-
+    Reminders *object = self.remindersArray[indexPath.row];
+    cell.titleLabel.text = object.title;
+    cell.detailsLabel.text = object.details;
+    cell.imageThumbnail.image = [UIImage imageWithData:object.image];
     
     return cell;
 }
-
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"addreminder"]) {
+        UINavigationController *navigationController = segue.destinationViewController;
+        NewReminderViewController *newReminderViewController = [navigationController viewControllers][0];
+        newReminderViewController.delegate = self;
+    }
+  
 }
-*/
+-(void)newReminderViewControllerDidCancel:(Reminders *)reminderToDelete {
+    NSManagedObjectContext *context = [self getContext];
+    [context deleteObject:reminderToDelete];
+    
+     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)newReminderViewControllerDidAdd {
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSManagedObjectContext *context = [self getContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Reminders" inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    
+    
+    NSError *error = nil;
+    NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+    if (fetchedObjects == nil) {
+        NSLog(@"error: %@", error.localizedDescription);
+    }
+    self.remindersArray = fetchedObjects;
+    
+    [self.tableView reloadData];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+
+}
+
+- (NSManagedObjectContext *)getContext {
+    return [self getContainer].viewContext;
+}
+
+- (NSPersistentContainer *)getContainer{
+    return [self appDelegate].persistentContainer;
+}
+
+- (AppDelegate *)appDelegate {
+    return (AppDelegate *)[[UIApplication sharedApplication] delegate];
+}
 
 @end

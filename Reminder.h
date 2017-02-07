@@ -5,7 +5,7 @@
 //  Created by Chris Jones on 2017-02-06.
 //  Copyright © 2017 Jonescr. All rights reserved.
 //
-
+/*
 @import UIKit;
 
 @interface Reminder : NSObject
@@ -20,3 +20,4 @@
 - (instancetype)initWithTitle:(NSString*)title Body:(NSString*)details Image:(UIImage*)image displayFrequency:(NSInteger)frequency uniqueID:(NSString *)uniqueID hasImage:(BOOL)hasImage;
 
 @end
+*/
