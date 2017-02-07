@@ -11,6 +11,7 @@
 #import "Reminders+CoreDataProperties.h"
 #import "MasterTableViewController.h"
 #import "AppDelegate.h"
+#import "NewReminderViewController.h"
 
 @interface DetailViewController ()
 
@@ -45,7 +46,10 @@
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    
+    if ([[segue identifier] isEqualToString:@"NewReminderViewController"])  {
+        NewReminderViewController *nrvc = [segue destinationViewController];
+        nrvc.reminder = self.reminder;
+    }
 }
 
 @end

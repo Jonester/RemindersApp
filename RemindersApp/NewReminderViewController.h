@@ -16,7 +16,8 @@
 @interface NewReminderViewController : UIViewController
 
 @property (weak, nonatomic) id<NewReminderViewControllerDelegate>delegate;
-@property (strong, nonatomic) Reminders *reminders;
+
+@property (strong, nonatomic) Reminders *reminder;
 
 @end
 
