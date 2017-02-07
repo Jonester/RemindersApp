@@ -11,7 +11,7 @@
 #import "PhotoManager.h"
 #import "AppDelegate.h"
 
-@interface NewReminderViewController ()
+@interface NewReminderViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *reminderTitle;
 @property (weak, nonatomic) IBOutlet UITextField *reminderDetails;
@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *timesPerDayLabel;
 @property (strong, nonatomic) ReminderManager *remindManager;
 @property (strong, nonatomic) PhotoManager *photoManager;
+
 
 @end
 
@@ -38,10 +39,8 @@
 
 - (IBAction)newReminder:(UIBarButtonItem *)sender {
     NSString *title = self.reminderTitle.text;
-    UIImage *image = [UIImage imageNamed:@"front"];
-  
+    UIImage *image = self.reminderImage.image;
     
-    [self.remindManager.remindersArray addObject:reminder];
     NSString *details = self.reminderDetails.text;
     NSInteger displayFrequency = self.timesPerDayLabel.text.integerValue;
     
@@ -69,11 +68,28 @@
 }
 
 - (IBAction)takePhoto:(UIButton *)sender {
-    
+    UIImagePickerController *picker = [[UIImagePickerController alloc]init];
+    picker.delegate = self;
+    [picker setSourceType:UIImagePickerControllerSourceTypeCamera];
+    [self presentViewController:picker animated:YES completion:nil];
 }
 
 - (IBAction)chooseFromLibrary:(UIButton *)sender {
-    
+    UIImagePickerController *picker2 = [[UIImagePickerController alloc]init];
+    picker2.delegate = self;
+    [picker2 setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+    [self presentViewController:picker2 animated:YES completion:nil];
+}
+
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+    UIImage *image = [[UIImage alloc]init];
+    image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    [self.reminderImage setImage:image];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)onlinePhoto:(UIButton *)sender {

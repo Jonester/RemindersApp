@@ -15,7 +15,6 @@
 @interface MasterTableViewController () <NewReminderViewControllerDelegate>
 
 //@property (strong, nonatomic) ReminderManager *manager;
-@property (strong, nonatomic) NSArray *remindersArray;
 @end
 
 @implementation MasterTableViewController

@@ -10,4 +10,6 @@
 
 @interface MasterTableViewController : UITableViewController
 
+@property (strong, nonatomic) NSArray *remindersArray;
+
 @end
