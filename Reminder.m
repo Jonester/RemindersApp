@@ -18,7 +18,7 @@
         _details = details;
         _image = image;
         _displayFrequency = frequency;
-        _uniqueID = uniqueID;
+        _uniqueID = [[NSUUID UUID] UUIDString];
         _hasImage = hasImage;
     }
     return self;

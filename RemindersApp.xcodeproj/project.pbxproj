@@ -19,6 +19,7 @@
 		3C42F3191E4922700015F1FC /* ReminderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C42F3181E4922700015F1FC /* ReminderManager.m */; };
 		3C42F31C1E4924A70015F1FC /* ReminderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C42F31B1E4924A70015F1FC /* ReminderTableViewCell.m */; };
 		3C42F31F1E4937730015F1FC /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C42F31E1E4937730015F1FC /* DetailViewController.m */; };
+		3C42F3351E4A3DCC0015F1FC /* PhotoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C42F3341E4A3DCC0015F1FC /* PhotoManager.m */; };
 		A1B5DF7B1E494E4000B553F8 /* Reminders+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A1B5DF791E494E4000B553F8 /* Reminders+CoreDataProperties.m */; };
 /* End PBXBuildFile section */
 
@@ -44,6 +45,8 @@
 		3C42F31B1E4924A70015F1FC /* ReminderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReminderTableViewCell.m; sourceTree = "<group>"; };
 		3C42F31D1E4937730015F1FC /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		3C42F31E1E4937730015F1FC /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+		3C42F3331E4A3DCC0015F1FC /* PhotoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoManager.h; sourceTree = "<group>"; };
+		3C42F3341E4A3DCC0015F1FC /* PhotoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoManager.m; sourceTree = "<group>"; };
 		A1B5DF761E494E4000B553F8 /* Reminders+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Reminders+CoreDataClass.h"; sourceTree = "<group>"; };
 		A1B5DF771E494E4000B553F8 /* Reminders+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Reminders+CoreDataClass.m"; sourceTree = "<group>"; };
 		A1B5DF781E494E4000B553F8 /* Reminders+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Reminders+CoreDataProperties.h"; sourceTree = "<group>"; };
@@ -96,6 +99,8 @@
 				3C42F30F1E49191E0015F1FC /* MasterTableViewController.m */,
 				3C42F31A1E4924A70015F1FC /* ReminderTableViewCell.h */,
 				3C42F31B1E4924A70015F1FC /* ReminderTableViewCell.m */,
+				3C42F3331E4A3DCC0015F1FC /* PhotoManager.h */,
+				3C42F3341E4A3DCC0015F1FC /* PhotoManager.m */,
 				3C42F2FD1E49185D0015F1FC /* Main.storyboard */,
 				3C42F3001E49185D0015F1FC /* RemindersApp.xcdatamodeld */,
 				3C42F2F41E49185D0015F1FC /* Supporting Files */,
@@ -189,6 +194,7 @@
 			files = (
 				3C42F2F91E49185D0015F1FC /* AppDelegate.m in Sources */,
 				3C42F3161E491FFC0015F1FC /* Reminder.m in Sources */,
+				3C42F3351E4A3DCC0015F1FC /* PhotoManager.m in Sources */,
 				3C42F31F1E4937730015F1FC /* DetailViewController.m in Sources */,
 				A1B5DF7B1E494E4000B553F8 /* Reminders+CoreDataProperties.m in Sources */,
 				3C42F3101E49191E0015F1FC /* MasterTableViewController.m in Sources */,
