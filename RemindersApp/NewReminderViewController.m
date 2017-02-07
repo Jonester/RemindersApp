@@ -7,11 +7,16 @@
 //
 
 #import "NewReminderViewController.h"
+#import "Reminder.h"
+#import "ReminderManager.h"
 
 @interface NewReminderViewController ()
+
 @property (weak, nonatomic) IBOutlet UITextField *reminderTitle;
-@property (weak, nonatomic) IBOutlet UITextView *reminderDetails;
+@property (weak, nonatomic) IBOutlet UITextField *reminderDetails;
 @property (weak, nonatomic) IBOutlet UIImageView *reminderImage;
+@property (weak, nonatomic) IBOutlet UILabel *timesPerDayLabel;
+@property (strong, nonatomic) ReminderManager *manager;
 
 @end
 
@@ -19,7 +24,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    self.manager = [ReminderManager new];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -27,14 +33,21 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (IBAction)newReminder:(UIBarButtonItem *)sender {
+    Reminder *reminder = [[Reminder alloc]initWithTitle:self.reminderTitle.text Body:self.reminderDetails.text Image:self.reminderImage.image displayFrequency:[self.timesPerDayLabel.text integerValue] uniqueID:@"FirstID" hasImage:NO];
+    
+    [self.manager.remindersArray addObject:reminder];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
-*/
+
+- (IBAction)reminderTimesPerDay:(UIStepper *)sender {
+    self.timesPerDayLabel.text = @(sender.value).stringValue;
+}
+
+- (IBAction)cancelReminder:(UIBarButtonItem *)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 
 @end
