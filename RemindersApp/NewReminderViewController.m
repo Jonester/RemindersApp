@@ -19,7 +19,6 @@
 
 @property (nonatomic) NSMutableArray *remindersIDArray;
 @property (strong, nonatomic) Reminders *reminderNew;
-@property (nonatomic) NSString *reminderIDString;
 
 @end
 
@@ -36,13 +35,13 @@
     
     // Set initial value for Display
     self.timesPerDayLabel.text = @"5";
+    self.reminderDetails.contentVerticalAlignment = UIControlContentVerticalAlignmentTop;
     
 }
 
 - (IBAction)newReminder:(UIBarButtonItem *)sender {
     
     if (self.reminder != nil) {
-        self.reminderIDString = @"edit";
         
         self.reminder.title = self.reminderTitle.text;
         self.reminder.details = self.reminderDetails.text;
@@ -55,8 +54,9 @@
             NSLog(@"Save Failed: %@", error.localizedDescription);
         }
         
+        
     } else {
-    self.reminderIDString = @"new";
+
 
     NSString *title = self.reminderTitle.text;
     UIImage *image = self.reminderImage.image;
@@ -98,7 +98,7 @@
             NSLog(@"Will fire at %@", scheduledTime);
             
             // Make Identifiers, pass into Local Array (*this needs to persist*)
-            NSString* identifier = [NSString stringWithFormat:@"%@%i", self.reminderIDString, i];
+            NSString* identifier = [[NSUUID UUID] UUIDString];
             NSLog(@"%@",identifier);
             [self.remindersIDArray addObject:identifier];
 
