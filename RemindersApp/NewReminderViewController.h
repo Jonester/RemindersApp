@@ -2,12 +2,13 @@
 //  NewReminderViewController.h
 //  RemindersApp
 //
-//  Created by Chris Jones on 2017-02-06.
-//  Copyright © 2017 Jonescr. All rights reserved.
-//
+
+
+@import UserNotifications;
 
 #import <UIKit/UIKit.h>
 #import "Reminders+CoreDataClass.h"
+#import "NotificationsManager.h"
 
 @protocol NewReminderViewControllerDelegate;
 
