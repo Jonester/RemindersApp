@@ -20,6 +20,7 @@
 		3CC86FC71E4A8223000CFAD1 /* OnlinePhotosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CC86FC61E4A8223000CFAD1 /* OnlinePhotosViewController.m */; };
 		3CC86FCA1E4A824B000CFAD1 /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CC86FC91E4A824B000CFAD1 /* Photo.m */; };
 		3CC86FCD1E4A8260000CFAD1 /* CollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CC86FCC1E4A8260000CFAD1 /* CollectionViewCell.m */; };
+		5DF565751E4AA44500E5ABC7 /* NotificationsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF565741E4AA44500E5ABC7 /* NotificationsManager.m */; };
 		A1B5DF7B1E494E4000B553F8 /* Reminders+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A1B5DF791E494E4000B553F8 /* Reminders+CoreDataProperties.m */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +48,8 @@
 		3CC86FC91E4A824B000CFAD1 /* Photo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Photo.m; sourceTree = "<group>"; };
 		3CC86FCB1E4A8260000CFAD1 /* CollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewCell.h; sourceTree = "<group>"; };
 		3CC86FCC1E4A8260000CFAD1 /* CollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewCell.m; sourceTree = "<group>"; };
+		5DF565731E4AA44500E5ABC7 /* NotificationsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationsManager.h; sourceTree = "<group>"; };
+		5DF565741E4AA44500E5ABC7 /* NotificationsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationsManager.m; sourceTree = "<group>"; };
 		A1B5DF761E494E4000B553F8 /* Reminders+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Reminders+CoreDataClass.h"; sourceTree = "<group>"; };
 		A1B5DF771E494E4000B553F8 /* Reminders+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Reminders+CoreDataClass.m"; sourceTree = "<group>"; };
 		A1B5DF781E494E4000B553F8 /* Reminders+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Reminders+CoreDataProperties.h"; sourceTree = "<group>"; };
@@ -104,6 +107,7 @@
 				3C42F2FD1E49185D0015F1FC /* Main.storyboard */,
 				3C42F3001E49185D0015F1FC /* RemindersApp.xcdatamodeld */,
 				3C42F2F41E49185D0015F1FC /* Supporting Files */,
+				5DF565761E4AA45100E5ABC7 /* Notifications */,
 			);
 			path = RemindersApp;
 			sourceTree = "<group>";
@@ -119,6 +123,15 @@
 				3C42F2F51E49185D0015F1FC /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5DF565761E4AA45100E5ABC7 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				5DF565731E4AA44500E5ABC7 /* NotificationsManager.h */,
+				5DF565741E4AA44500E5ABC7 /* NotificationsManager.m */,
+			);
+			name = Notifications;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -194,6 +207,7 @@
 			files = (
 				3C42F2F91E49185D0015F1FC /* AppDelegate.m in Sources */,
 				3C42F31F1E4937730015F1FC /* DetailViewController.m in Sources */,
+				5DF565751E4AA44500E5ABC7 /* NotificationsManager.m in Sources */,
 				A1B5DF7B1E494E4000B553F8 /* Reminders+CoreDataProperties.m in Sources */,
 				3C42F3101E49191E0015F1FC /* MasterTableViewController.m in Sources */,
 				3C42F31C1E4924A70015F1FC /* ReminderTableViewCell.m in Sources */,
