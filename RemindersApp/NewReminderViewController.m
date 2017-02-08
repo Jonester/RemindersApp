@@ -48,7 +48,7 @@
         self.reminder.details = self.reminderDetails.text;
         self.reminder.image = [NSData dataWithData:UIImagePNGRepresentation(self.reminderImage.image)];
         NSManagedObjectContext *context = [self getContext];
-//        self.reminder = [NSEntityDescription insertNewObjectForEntityForName:@"Reminders" inManagedObjectContext:context];
+        
         [[self appDelegate] saveContext];
         NSError *error = nil;
         if (![context save:&error]) {
