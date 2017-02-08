@@ -18,7 +18,7 @@
 @property (weak, nonatomic) id<NewReminderViewControllerDelegate>delegate;
 
 @property (strong, nonatomic) Reminders *reminder;
-
+@property (weak, nonatomic) IBOutlet UIImageView *reminderImage;
 @end
 
 @protocol NewReminderViewControllerDelegate <NSObject>
