@@ -19,10 +19,9 @@
 @implementation MasterTableViewController
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     
-   // self.manager = [ReminderManager new];
-    [super viewDidLoad];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSManagedObjectContext *context = [self getContext];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Reminders" inManagedObjectContext:context];
@@ -39,6 +38,7 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated {
+    
     [self.tableView reloadData];
 }
 

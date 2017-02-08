@@ -41,29 +41,34 @@
         self.reminder.title = self.reminderTitle.text;
         self.reminder.details = self.reminderDetails.text;
         self.reminder.image = [NSData dataWithData:UIImagePNGRepresentation(self.reminderImage.image)];
+        NSManagedObjectContext *context = [self getContext];
+//        self.reminder = [NSEntityDescription insertNewObjectForEntityForName:@"Reminders" inManagedObjectContext:context];
+        [[self appDelegate] saveContext];
+        NSError *error = nil;
+        if (![context save:&error]) {
+            NSLog(@"Save Failed: %@", error.localizedDescription);
+        }
+        
     } else {
-    NSString *title = self.reminderTitle.text;
-    UIImage *image = self.reminderImage.image;
-    NSString *details = self.reminderDetails.text;
-    NSInteger displayFrequency = self.timesPerDayLabel.text.integerValue;
-    
-    NSManagedObjectContext *context = [self getContext];
-    Reminders *reminders = [NSEntityDescription insertNewObjectForEntityForName:@"Reminders" inManagedObjectContext:context];
-    reminders.title = title;
-    reminders.details = details;
-    reminders.uniqueID = [[NSUUID UUID] UUIDString];
-    reminders.displayFrequency = displayFrequency;
-    reminders.image = UIImagePNGRepresentation(image);
-    NSError *error = nil;
-    if (![context save:&error]) {
-        NSLog(@"Save Failed: %@", error.localizedDescription);
+        NSString *title = self.reminderTitle.text;
+        UIImage *image = self.reminderImage.image;
+        NSString *details = self.reminderDetails.text;
+        NSInteger displayFrequency = self.timesPerDayLabel.text.integerValue;
+        
+        NSManagedObjectContext *context = [self getContext];
+        Reminders *reminders = [NSEntityDescription insertNewObjectForEntityForName:@"Reminders" inManagedObjectContext:context];
+        reminders.title = title;
+        reminders.details = details;
+        reminders.uniqueID = [[NSUUID UUID] UUIDString];
+        reminders.displayFrequency = displayFrequency;
+        reminders.image = UIImagePNGRepresentation(image);
+        NSError *error = nil;
+        if (![context save:&error]) {
+            NSLog(@"Save Failed: %@", error.localizedDescription);
+        }
     }
-    }
-
     [self.delegate newReminderViewControllerDidAdd];
     [self dismissViewControllerAnimated:YES completion:nil];
-
-    
 }
 
 - (IBAction)reminderTimesPerDay:(UIStepper *)sender {
@@ -72,7 +77,7 @@
 
 - (IBAction)cancelReminder:(UIBarButtonItem *)sender {
     if (self.reminder != nil) {
-    [self.delegate newReminderViewControllerDidCancel:self.reminder];
+        [self.delegate newReminderViewControllerDidCancel:self.reminder];
     }
     [self dismissViewControllerAnimated:YES completion:nil];
     
