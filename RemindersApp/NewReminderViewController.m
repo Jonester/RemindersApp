@@ -39,8 +39,6 @@
     
 }
 
-
-
 - (IBAction)newReminder:(UIBarButtonItem *)sender {
     
     if (self.reminder != nil) {
@@ -86,7 +84,7 @@
         NSInteger timesPerDay = [self.timesPerDayLabel.text intValue]; // # Items in Array
         NSDate *startTime = self.startTime.date; // Start Range of Array
         NSDate *endTime = self.endTime.date; // End Range of Array
-        NSArray *randomTimesArray = [notificationsManager generateArrayOfRandomTimes:startTime toTime:endTime numberOfReminders:timesPerDay];
+        NSArray *randomTimesArray = [notificationsManager generateArrayOfRandomTimes:startTime toTime:endTime numberOfReminders:(int)timesPerDay];
     
     
         // Use randomTimes Array to schedule notifcations
@@ -119,11 +117,6 @@
     [self.delegate newReminderViewControllerDidAdd];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
-
-
-
-
-
 
 - (IBAction)reminderTimesPerDay:(UIStepper *)sender {
     self.timesPerDayLabel.text = @(sender.value).stringValue;
