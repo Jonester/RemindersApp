@@ -1,13 +1,12 @@
 //
 //  NewReminderViewController.m
 //  RemindersApp
-//
-//  Created by Chris Jones on 2017-02-06.
-//  Copyright © 2017 Jonescr. All rights reserved.
-//
+
+
 
 #import "NewReminderViewController.h"
 #import "AppDelegate.h"
+
 
 @interface NewReminderViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
@@ -18,6 +17,10 @@
 @property (weak, nonatomic) IBOutlet UIDatePicker *startTime;
 @property (weak, nonatomic) IBOutlet UIDatePicker *endTime;
 
+@property (nonatomic) NSMutableArray *remindersIDArray;
+@property (strong, nonatomic) Reminders *reminderNew;
+@property (nonatomic) NSString *reminderIDString;
+
 @end
 
 @implementation NewReminderViewController
@@ -27,16 +30,21 @@
     
     [self displayReminderForEdit:self.reminder];
     
+    // Set Date Picker Time Zone
+    self.startTime.timeZone = [NSTimeZone defaultTimeZone];
+    self.endTime.timeZone = [NSTimeZone defaultTimeZone];
+    
+    // Set initial value for Display
+    self.timesPerDayLabel.text = @"5";
+    
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+
 
 - (IBAction)newReminder:(UIBarButtonItem *)sender {
     
     if (self.reminder != nil) {
+        self.reminderIDString = @"edit";
         
         self.reminder.title = self.reminderTitle.text;
         self.reminder.details = self.reminderDetails.text;
@@ -50,26 +58,72 @@
         }
         
     } else {
-        NSString *title = self.reminderTitle.text;
-        UIImage *image = self.reminderImage.image;
-        NSString *details = self.reminderDetails.text;
-        NSInteger displayFrequency = self.timesPerDayLabel.text.integerValue;
-        
-        NSManagedObjectContext *context = [self getContext];
-        Reminders *reminders = [NSEntityDescription insertNewObjectForEntityForName:@"Reminders" inManagedObjectContext:context];
-        reminders.title = title;
-        reminders.details = details;
-        reminders.uniqueID = [[NSUUID UUID] UUIDString];
-        reminders.displayFrequency = displayFrequency;
-        reminders.image = UIImagePNGRepresentation(image);
-        NSError *error = nil;
-        if (![context save:&error]) {
-            NSLog(@"Save Failed: %@", error.localizedDescription);
-        }
+    self.reminderIDString = @"new";
+
+    NSString *title = self.reminderTitle.text;
+    UIImage *image = self.reminderImage.image;
+    NSString *details = self.reminderDetails.text;
+    NSInteger displayFrequency = self.timesPerDayLabel.text.integerValue;
+    
+    NSManagedObjectContext *context = [self getContext];
+    self.reminderNew = [NSEntityDescription insertNewObjectForEntityForName:@"Reminders" inManagedObjectContext:context];
+    self.reminderNew.title = title;
+    self.reminderNew.details = details;
+    self.reminderNew.uniqueID = [[NSUUID UUID] UUIDString];
+    self.reminderNew.displayFrequency = displayFrequency;
+    self.reminderNew.image = UIImagePNGRepresentation(image);
+    NSError *error = nil;
+    if (![context save:&error]) {
+        NSLog(@"Save Failed: %@", error.localizedDescription);
+
     }
+}
+    
+// ADD NOTIFICATIONS
+         NotificationsManager *notificationsManager = [NotificationsManager new];
+        
+        // Build randomTimes Array
+        NSInteger timesPerDay = [self.timesPerDayLabel.text intValue]; // # Items in Array
+        NSDate *startTime = self.startTime.date; // Start Range of Array
+        NSDate *endTime = self.endTime.date; // End Range of Array
+        NSArray *randomTimesArray = [notificationsManager generateArrayOfRandomTimes:startTime toTime:endTime numberOfReminders:timesPerDay];
+    
+    
+        // Use randomTimes Array to schedule notifcations
+    
+        self.remindersIDArray = [NSMutableArray new];
+    
+    
+        for (int i =0; i<randomTimesArray.count; i++) {
+            // Grab a time from randomTimes Array
+            NSDate *scheduledTime = randomTimesArray[i];
+            NSLog(@"Will fire at %@", scheduledTime);
+            
+            // Make Identifiers, pass into Local Array (*this needs to persist*)
+            NSString* identifier = [NSString stringWithFormat:@"%@%i", self.reminderIDString, i];
+            NSLog(@"%@",identifier);
+            [self.remindersIDArray addObject:identifier];
+
+            // Add Requests to Notification Center
+            // For Testing: NSDate *testDate = [NSDate dateWithTimeIntervalSinceNow:10];
+            UNNotificationRequest *request = [notificationsManager makeRequestFromReminderAndDateAndIdentifier:self.reminderNew date:scheduledTime identifer:identifier];
+            [notificationsManager addToNotificationCenter:request];
+            NSLog(@"The new requests were sent");
+            
+        }
+        
+        // Show Pending Requests
+        [notificationsManager showPendingNotifications];
+    
+    
     [self.delegate newReminderViewControllerDidAdd];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
+
+
+
+
 
 - (IBAction)reminderTimesPerDay:(UIStepper *)sender {
     self.timesPerDayLabel.text = @(sender.value).stringValue;

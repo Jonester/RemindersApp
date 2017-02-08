@@ -12,6 +12,10 @@
 #import "ReminderTableViewCell.h"
 #import "DetailViewController.h"
 
+//Notifcations
+#import "NotificationsManager.h"
+
+@import UserNotifications;
 @interface MasterTableViewController () <NewReminderViewControllerDelegate>
 
 @end
@@ -19,6 +23,10 @@
 @implementation MasterTableViewController
 
 - (void)viewDidLoad {
+
+    [super viewDidLoad];
+    [NotificationsManager SetupAndAskUserPermissions];
+
     
     [super viewDidLoad];
     
@@ -37,15 +45,14 @@
     [self.tableView reloadData];
 }
 
+
+
 -(void)viewWillAppear:(BOOL)animated {
     
     [self.tableView reloadData];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+
 
 #pragma mark - Table view data source
 
@@ -69,6 +76,10 @@
     
     return cell;
 }
+
+
+
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"addreminder"]) {
         UINavigationController *navigationController = segue.destinationViewController;
@@ -86,12 +97,16 @@
     }
   
 }
+
+
 -(void)newReminderViewControllerDidCancel:(Reminders *)reminderToDelete {
     NSManagedObjectContext *context = [self getContext];
     [context deleteObject:reminderToDelete];
     
      [self dismissViewControllerAnimated:YES completion:nil];
 }
+
+
 
 -(void)newReminderViewControllerDidAdd {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
