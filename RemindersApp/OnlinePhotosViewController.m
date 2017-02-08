@@ -79,21 +79,9 @@
    
     return cell;
 }
-//    
-//- (IBAction)save:(id)sender {
-//    Photo *photo = [[Photo alloc]init];
-//    
-//    photo.image = self.cell.onlineImagesView.image;
-//   
-//    
-//    [self.delegate onlinePhotosViewController:self didAddPhoto:photo.image];
-//    ;}
-//    
+
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
    
-    // delegation to pass the image back
-    
-    // get the image for selected cell
     
     Photo *photo = self.photos[indexPath.item];
     [self.delegate onlinePhotosViewController:self didAddPhoto:photo];

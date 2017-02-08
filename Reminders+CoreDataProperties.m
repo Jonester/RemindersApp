@@ -2,7 +2,7 @@
 //  Reminders+CoreDataProperties.m
 //  RemindersApp
 //
-//  Created by Tristan Wolf on 2017-02-06.
+//  Created by Tristan Wolf on 2017-02-08.
 //  Copyright © 2017 Jonescr. All rights reserved.
 //  This file was automatically generated and should not be edited.
 //
@@ -15,11 +15,13 @@
 	return [[NSFetchRequest alloc] initWithEntityName:@"Reminders"];
 }
 
-@dynamic title;
 @dynamic details;
-@dynamic image;
 @dynamic displayFrequency;
 @dynamic hasImage;
+@dynamic image;
+@dynamic title;
 @dynamic uniqueID;
+@dynamic startDate;
+@dynamic endDate;
 
 @end

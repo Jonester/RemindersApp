@@ -39,7 +39,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Details" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mHM-eZ-83w">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Details" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mHM-eZ-83w">
                                 <rect key="frame" x="36" y="164" width="303" height="100"/>
                                 <color key="backgroundColor" red="0.87834872090000005" green="1" blue="0.94612243760000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -61,23 +61,23 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Between:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rDs-Il-blj">
-                                <rect key="frame" x="36" y="564" width="150" height="40"/>
-                                <color key="backgroundColor" red="0.87834872090000005" green="1" blue="0.94612243760000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="150" id="H1G-0P-QYD"/>
-                                    <constraint firstAttribute="height" constant="40" id="qm3-XW-U2u"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="And:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tGu-fW-KXZ">
                                 <rect key="frame" x="186" y="564" width="153" height="40"/>
                                 <color key="backgroundColor" red="0.87834872090000005" green="1" blue="0.94612243760000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="c4M-WB-DU5"/>
                                     <constraint firstAttribute="width" constant="153" id="hhX-pr-Vep"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Between:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rDs-Il-blj">
+                                <rect key="frame" x="36" y="564" width="150" height="40"/>
+                                <color key="backgroundColor" red="0.87834872090000005" green="1" blue="0.94612243760000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="H1G-0P-QYD"/>
+                                    <constraint firstAttribute="height" constant="40" id="qm3-XW-U2u"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -117,6 +117,9 @@
                         <outlet property="detailDetails" destination="mHM-eZ-83w" id="cCI-H5-VHt"/>
                         <outlet property="detailImage" destination="c3k-9y-7H6" id="sCI-ix-0Qi"/>
                         <outlet property="detailTitle" destination="x3H-el-j8i" id="s5I-oi-1iZ"/>
+                        <outlet property="endTimeLabel" destination="tGu-fW-KXZ" id="gnA-iK-f4T"/>
+                        <outlet property="startTimeLabel" destination="rDs-Il-blj" id="FvC-8E-cnS"/>
+                        <outlet property="timesPerDayLabel" destination="b9b-pJ-NGy" id="4L7-wF-cki"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ird-9r-6hm" userLabel="First Responder" sceneMemberID="firstResponder"/>

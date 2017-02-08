@@ -66,6 +66,8 @@
     UIImage *image = self.reminderImage.image;
     NSString *details = self.reminderDetails.text;
     NSInteger displayFrequency = self.timesPerDayLabel.text.integerValue;
+        NSDate *startDate = self.startTime.date;
+        NSDate *endDate = self.endTime.date;
     
     NSManagedObjectContext *context = [self getContext];
     self.reminderNew = [NSEntityDescription insertNewObjectForEntityForName:@"Reminders" inManagedObjectContext:context];
@@ -74,6 +76,8 @@
     self.reminderNew.uniqueID = [[NSUUID UUID] UUIDString];
     self.reminderNew.displayFrequency = displayFrequency;
     self.reminderNew.image = UIImagePNGRepresentation(image);
+    self.reminderNew.startDate = startDate;
+    self.reminderNew.endDate = endDate;
     NSError *error = nil;
     if (![context save:&error]) {
         NSLog(@"Save Failed: %@", error.localizedDescription);
