@@ -10,9 +10,17 @@
 #import "Photo.h"
 #import "CollectionViewCell.h"
 
+@protocol OnlinePhotosViewControllerDelegate;
 
 @interface OnlinePhotosViewController : UIViewController
 
 @property (nonatomic) Photo *photo;
+@property (nonatomic, weak) id<OnlinePhotosViewControllerDelegate>delegate;
+
+@end
+
+@protocol OnlinePhotosViewControllerDelegate <NSObject>
+
+-(void)onlinePhotosViewController:(OnlinePhotosViewController *)controller didAddPhoto:(Photo *)image;
 
 @end

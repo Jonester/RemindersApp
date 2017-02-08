@@ -10,11 +10,12 @@
 
 @implementation Photo
 
--(instancetype)initWithURL:(NSURL *)photoDownloadURL {
+-(instancetype)initWithURL:(NSURL *)photoDownloadURL andTitle:(NSString *)title {
     self = [super init];
     
     if (self) {
         _photoDownloadURL = photoDownloadURL;
+        _title = title;
     }
     return self;
 }
