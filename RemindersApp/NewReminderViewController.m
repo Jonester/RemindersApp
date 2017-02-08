@@ -2,11 +2,10 @@
 //  NewReminderViewController.m
 //  RemindersApp
 
-
-
 #import "NewReminderViewController.h"
+#import "NotificationsManager.h"
 #import "AppDelegate.h"
-
+#import "Identifier+CoreDataClass.h"
 
 @interface NewReminderViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
@@ -34,7 +33,7 @@
     self.endTime.timeZone = [NSTimeZone defaultTimeZone];
     
     // Set initial value for Display
-    self.timesPerDayLabel.text = @"5";
+    self.timesPerDayLabel.text = @"1";
     self.reminderDetails.contentVerticalAlignment = UIControlContentVerticalAlignmentTop;
     
 }
@@ -54,6 +53,32 @@
             NSLog(@"Save Failed: %@", error.localizedDescription);
         }
         
+        NSMutableArray *notifications = [NSMutableArray new];
+        
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+        NSManagedObjectContext *context1 = [self getContext];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Identifier" inManagedObjectContext:context1];
+        [fetchRequest setEntity:entity];
+        
+        NSError *error1 = nil;
+        NSArray *fetchedObjects = [context1 executeFetchRequest:fetchRequest error:&error1];
+        if (fetchedObjects == nil) {
+            NSLog(@"error: %@", error.localizedDescription);
+        }
+        notifications = [fetchedObjects mutableCopy];
+        
+        for (Identifier *identifier in notifications) {
+            [context deleteObject:identifier];
+        }
+            [notifications removeAllObjects];
+        
+        [[self appDelegate] saveContext];
+        // Use the notifications array to clear the Notifications Center
+        UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+        [center removeDeliveredNotificationsWithIdentifiers:notifications];
+        
+        
+        //[notifications removeAllObjects];
         
     } else {
 
@@ -98,18 +123,27 @@
             NSLog(@"Will fire at %@", scheduledTime);
             
             // Make Identifiers, pass into Local Array (*this needs to persist*)
-            NSString* identifier = [[NSUUID UUID] UUIDString];
-            NSLog(@"%@",identifier);
-            [self.remindersIDArray addObject:identifier];
+            NSString* identifierID = [[NSUUID UUID] UUIDString];
+            NSLog(@"%@",identifierID);
+            [self.remindersIDArray addObject:identifierID];
 
             // Add Requests to Notification Center
             // For Testing: NSDate *testDate = [NSDate dateWithTimeIntervalSinceNow:10];
-            UNNotificationRequest *request = [notificationsManager makeRequestFromReminderAndDateAndIdentifier:self.reminderNew date:scheduledTime identifer:identifier];
+            UNNotificationRequest *request = [notificationsManager makeRequestFromReminderAndDateAndIdentifier:self.reminderNew date:scheduledTime identifer:identifierID];
             [notificationsManager addToNotificationCenter:request];
             NSLog(@"The new requests were sent");
             
+            NSManagedObjectContext *context = [self getContext];
+            Identifier *identifier = [NSEntityDescription insertNewObjectForEntityForName:@"Identifier" inManagedObjectContext:context];
+            identifier.scheduleIdentifier = identifierID;
+            
+            NSError *error = nil;
+            if (![context save:&error]) {
+                NSLog(@"Save Failed: %@", error.localizedDescription);
+                
+            }
         }
-        
+    
         // Show Pending Requests
         [notificationsManager showPendingNotifications];
     

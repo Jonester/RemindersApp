@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "Reminders+CoreDataClass.h"
-#import "NotificationsManager.h"
 
 @protocol NewReminderViewControllerDelegate;
 

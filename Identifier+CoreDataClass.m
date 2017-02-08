@@ -1,5 +1,5 @@
 //
-//  Reminders+CoreDataClass.m
+//  Identifier+CoreDataClass.m
 //  RemindersApp
 //
 //  Created by Chris Jones on 2017-02-08.
@@ -7,8 +7,8 @@
 //  This file was automatically generated and should not be edited.
 //
 
-#import "Reminders+CoreDataClass.h"
 #import "Identifier+CoreDataClass.h"
-@implementation Reminders
+#import "Reminders+CoreDataClass.h"
+@implementation Identifier
 
 @end

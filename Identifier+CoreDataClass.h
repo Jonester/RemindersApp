@@ -1,5 +1,5 @@
 //
-//  Reminders+CoreDataClass.h
+//  Identifier+CoreDataClass.h
 //  RemindersApp
 //
 //  Created by Chris Jones on 2017-02-08.
@@ -10,14 +10,14 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Identifier;
+@class Reminders;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Reminders : NSManagedObject
+@interface Identifier : NSManagedObject
 
 @end
 
 NS_ASSUME_NONNULL_END
 
-#import "Reminders+CoreDataProperties.h"
+#import "Identifier+CoreDataProperties.h"

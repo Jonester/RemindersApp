@@ -20,6 +20,8 @@
 
 @property (strong, nonatomic) NSManagedObjectContext *context;
 
+- (NSManagedObjectContext *)getContext;
+
 @end
 
 @implementation MasterTableViewController
