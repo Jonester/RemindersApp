@@ -14,19 +14,20 @@
 - (void)setPhoto:(Photo *)photo {
     
      if (photo.image == nil) {
-        [self fetchImage];
+         _photo = photo;
+         [self fetchImage];
     } else {
         self.onlineImagesView.image = photo.image;
     }
-    _photo = photo;
+ 
 }
 
 -(void)fetchImage {
     NSURL *downloadURL = self.photo.photoDownloadURL;
     
-    if (downloadURL == nil) {
-        return;
-    }
+   // if (downloadURL == nil) {
+    //   return;
+   // }
     
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     

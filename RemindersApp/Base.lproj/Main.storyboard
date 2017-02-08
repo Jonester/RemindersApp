@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="0kN-vB-avC">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C68" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="0kN-vB-avC">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -241,7 +241,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="d0V-yk-quJ">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="front" translatesAutoresizingMaskIntoConstraints="NO" id="d0V-yk-quJ">
                                 <rect key="frame" x="68" y="423" width="240" height="150"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="150" id="3kN-XC-rbo"/>
@@ -258,7 +258,7 @@
                                 <state key="normal" title="Online Photo"/>
                                 <connections>
                                     <action selector="onlinePhoto:" destination="12X-XK-2yN" eventType="touchUpInside" id="rFw-Uo-hsN"/>
-                                    <segue destination="ykJ-bk-mGu" kind="show" identifier="collectionviewcontroller" id="Z2b-Iw-dcI"/>
+                                    <segue destination="bIv-fQ-RmF" kind="presentation" identifier="collectionviewcontroller" id="HbN-mg-zg5"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BvR-pj-sKC">
@@ -315,7 +315,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="jt4-yU-XZY">
-                                <rect key="frame" x="0.0" y="325" width="138" height="47"/>
+                                <rect key="frame" x="0.0" y="295" width="138" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="138" id="Uey-28-uXJ"/>
                                     <constraint firstAttribute="height" constant="100" id="pu2-sZ-xUl"/>
@@ -325,7 +325,7 @@
                                 </date>
                             </datePicker>
                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="2Vy-f3-p0K">
-                                <rect key="frame" x="237" y="325" width="138" height="47"/>
+                                <rect key="frame" x="237" y="294.5" width="138" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="TfJ-Wr-Hcv"/>
                                     <constraint firstAttribute="width" constant="138" id="hFh-7f-1EH"/>
@@ -439,7 +439,7 @@
             </objects>
             <point key="canvasLocation" x="2301.5999999999999" y="277.51124437781112"/>
         </scene>
-        <!--Online Photos View Controller-->
+        <!--Title-->
         <scene sceneID="WMI-OL-ptY">
             <objects>
                 <viewController id="ykJ-bk-mGu" customClass="OnlinePhotosViewController" sceneMemberID="viewController">
@@ -452,7 +452,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ygR-wb-SR9">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="D9s-G1-PFm">
                                     <size key="itemSize" width="145" height="150"/>
@@ -469,7 +469,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ggK-yn-Yez">
-                                                    <rect key="frame" x="0.0" y="0.0" width="156" height="150"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="145" height="150"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                             </subviews>
@@ -489,17 +489,26 @@
                         <constraints>
                             <constraint firstItem="ygR-wb-SR9" firstAttribute="leading" secondItem="Kiv-9G-XMT" secondAttribute="leading" id="Feg-Jr-s46"/>
                             <constraint firstItem="AC5-TA-LkX" firstAttribute="top" secondItem="ygR-wb-SR9" secondAttribute="bottom" id="JPa-gj-NoG"/>
-                            <constraint firstItem="ygR-wb-SR9" firstAttribute="top" secondItem="Kiv-9G-XMT" secondAttribute="top" id="uzL-Wx-JKc"/>
+                            <constraint firstItem="ygR-wb-SR9" firstAttribute="top" secondItem="Kiv-9G-XMT" secondAttribute="top" id="eQt-V9-Yp2"/>
                             <constraint firstAttribute="trailing" secondItem="ygR-wb-SR9" secondAttribute="trailing" id="xFd-we-KM4"/>
                         </constraints>
                     </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Title" id="V2G-T1-e0U">
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="5Nj-Iw-MOM">
+                            <connections>
+                                <action selector="save:" destination="ykJ-bk-mGu" id="8jO-Hd-RkT"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="collectionView" destination="ygR-wb-SR9" id="4qv-Ab-wvG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Eg-r3-yAO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2302" y="1022"/>
+            <point key="canvasLocation" x="3240.8000000000002" y="1021.4392803598201"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="3z3-Sh-rnb">
@@ -537,7 +546,28 @@
             </objects>
             <point key="canvasLocation" x="1514" y="-464"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="GzC-f7-021">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="bIv-fQ-RmF" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="0IB-JW-b5S">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="ykJ-bk-mGu" kind="relationship" relationship="rootViewController" id="zXb-Tb-aSb"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="G6t-MV-3cl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2301.5999999999999" y="1021.4392803598201"/>
+        </scene>
     </scenes>
+    <resources>
+        <image name="front" width="300" height="300"/>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="V8B-gG-hkf"/>
     </inferredMetricsTieBreakers>
