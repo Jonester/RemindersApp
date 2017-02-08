@@ -12,7 +12,9 @@
 @interface NewReminderViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, OnlinePhotosViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *reminderTitle;
-@property (weak, nonatomic) IBOutlet UITextField *reminderDetails;
+
+@property (weak, nonatomic) IBOutlet UIImageView *reminderImage;
+@property (weak, nonatomic) IBOutlet UITextView *reminderDetails;
 
 @property (weak, nonatomic) IBOutlet UILabel *timesPerDayLabel;
 @property (weak, nonatomic) IBOutlet UIDatePicker *startTime;
@@ -38,7 +40,7 @@
     
     // Set initial value for Display
     self.timesPerDayLabel.text = @"5";
-    
+   
 }
 
 
@@ -196,7 +198,7 @@
 -(void)onlinePhotosViewController:(OnlinePhotosViewController *)controller didAddPhoto:(Photo *)photo {
     
     [self.reminderImage setImage:photo.image];
-    // save to core data
+    
     [self dismissViewControllerAnimated:YES completion:nil];
     }
 @end
