@@ -45,7 +45,9 @@
             Photo *photo = [[Photo alloc]initWithURL:photoURL];
             [self.photos addObject:photo];
         }
-        [self.collectionView reloadData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.collectionView reloadData];
+        });
     }];
     
     [task resume];

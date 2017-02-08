@@ -15,6 +15,7 @@
     
      if (photo.image == nil) {
         [self fetchImage];
+         _photo = photo;
     } else {
         self.onlineImagesView.image = photo.image;
     }

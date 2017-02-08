@@ -14,6 +14,8 @@
 
 @interface MasterTableViewController () <NewReminderViewControllerDelegate>
 
+@property (strong, nonatomic) NSManagedObjectContext *context;
+
 @end
 
 @implementation MasterTableViewController
@@ -23,16 +25,16 @@
     [super viewDidLoad];
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSManagedObjectContext *context = [self getContext];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Reminders" inManagedObjectContext:context];
+    self.context = [self getContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Reminders" inManagedObjectContext:self.context];
     [fetchRequest setEntity:entity];
     
     NSError *error = nil;
-    NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+    NSArray *fetchedObjects = [self.context executeFetchRequest:fetchRequest error:&error];
     if (fetchedObjects == nil) {
         NSLog(@"error: %@", error.localizedDescription);
     }
-    self.remindersArray = fetchedObjects;
+    self.remindersArray = [fetchedObjects mutableCopy];
     
     [self.tableView reloadData];
 }
@@ -69,6 +71,20 @@
     
     return cell;
 }
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        
+        [self.context deleteObject:self.remindersArray[indexPath.row]];
+        [self.remindersArray removeObjectAtIndex:indexPath.row];
+        [[self appDelegate] saveContext];
+        
+        [tableView reloadData];
+    }
+}
+
+#pragma Segue
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"addreminder"]) {
         UINavigationController *navigationController = segue.destinationViewController;
@@ -84,33 +100,31 @@
         DetailViewController *dvc = nav.viewControllers[0];
         [dvc displayDetailView:reminder];
     }
-  
 }
+
 -(void)newReminderViewControllerDidCancel:(Reminders *)reminderToDelete {
-    NSManagedObjectContext *context = [self getContext];
-    [context deleteObject:reminderToDelete];
+    self.context = [self getContext];
+    [self.context deleteObject:reminderToDelete];
     
      [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(void)newReminderViewControllerDidAdd {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSManagedObjectContext *context = [self getContext];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Reminders" inManagedObjectContext:context];
+    self.context = [self getContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Reminders" inManagedObjectContext:self.context];
     [fetchRequest setEntity:entity];
     
     
     NSError *error = nil;
-    NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+    NSArray *fetchedObjects = [self.context executeFetchRequest:fetchRequest error:&error];
     if (fetchedObjects == nil) {
         NSLog(@"error: %@", error.localizedDescription);
     }
-    self.remindersArray = fetchedObjects;
+    self.remindersArray = [fetchedObjects mutableCopy];
     
     [self.tableView reloadData];
-    
     [self dismissViewControllerAnimated:YES completion:nil];
-
 }
 
 - (NSManagedObjectContext *)getContext {

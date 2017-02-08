@@ -10,7 +10,7 @@
 
 @interface MasterTableViewController : UITableViewController
 
-@property (strong, nonatomic) NSArray *remindersArray;
+@property (strong, nonatomic) NSMutableArray *remindersArray;
 
 - (NSManagedObjectContext *)getContext;
 
