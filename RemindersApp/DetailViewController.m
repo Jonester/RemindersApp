@@ -50,7 +50,7 @@
         nrvc.reminder = self.reminder;
     }
 }
-- (IBAction)doneButton:(UIBarButtonItem *)sender {
+- (IBAction)backButton:(UIBarButtonItem *)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
