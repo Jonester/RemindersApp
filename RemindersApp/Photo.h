@@ -12,10 +12,11 @@
 @interface Photo : NSObject
 
 @property (nonatomic, strong) NSURL *photoDownloadURL;
+@property (nonatomic, strong) NSString *title;
 
 @property (nonatomic) UIImage *image;
 
 
--(instancetype)initWithURL:(NSURL*)photoDownloadURL;
+-(instancetype)initWithURL:(NSURL*)photoDownloadURL andTitle:(NSString *)title;
 
 @end

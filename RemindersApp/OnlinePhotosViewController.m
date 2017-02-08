@@ -7,11 +7,15 @@
 //
 
 #import "OnlinePhotosViewController.h"
+#import "NewReminderViewController.h"
+#import "CollectionViewCell.h"
 
 @interface OnlinePhotosViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (nonatomic) NSMutableArray *photos;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (nonatomic) CollectionViewCell *cell;
+
 
 @end
 
@@ -21,7 +25,10 @@
     [super viewDidLoad];
     self.photos = [NSMutableArray new];
     
-    NSURL *url = [NSURL URLWithString:@"https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=274d899f647849f684a98a2c86588897&tags=landscape&safe_search=1&extras=url_m&per_page=50&format=json&nojsoncallback=1"];
+    NSURLComponents *comps = [NSURLComponents componentsWithString:@"https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=274d899f647849f684a98a2c86588897&tags=landscape&safe_search=1&extras=url_m&per_page=50&format=json&nojsoncallback=1"];
+    
+    NSURL *url = comps.URL;
+    
     
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
@@ -39,10 +46,11 @@
             return;
         }
         for (NSDictionary *photo in jsonDict[@"photos"][@"photo"]) {
+            NSString *title = photo[@"title"];
             NSString *photoURLString = photo[@"url_m"];
             NSURL *photoURL = [NSURL URLWithString:photoURLString];
             
-            Photo *photo = [[Photo alloc]initWithURL:photoURL];
+            Photo *photo = [[Photo alloc]initWithURL:photoURL andTitle:title];
             [self.photos addObject:photo];
         }
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -65,16 +73,33 @@
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     CollectionViewCell *cell = (CollectionViewCell *) [collectionView dequeueReusableCellWithReuseIdentifier:@"collectionviewcell" forIndexPath:indexPath];
+
     Photo *photo = self.photos[indexPath.row];
     cell.photo = photo;
-    
+   
     return cell;
 }
+//    
+//- (IBAction)save:(id)sender {
+//    Photo *photo = [[Photo alloc]init];
+//    
+//    photo.image = self.cell.onlineImagesView.image;
+//   
+//    
+//    [self.delegate onlinePhotosViewController:self didAddPhoto:photo.image];
+//    ;}
+//    
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+   
+    // delegation to pass the image back
     
+    // get the image for selected cell
     
-    
-    
-    
+    Photo *photo = self.photos[indexPath.item];
+    [self.delegate onlinePhotosViewController:self didAddPhoto:photo];
+  
+}
+
     // Do any additional setup after loading the view.
 
 
