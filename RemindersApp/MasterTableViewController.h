@@ -12,6 +12,4 @@
 
 @property (strong, nonatomic) NSMutableArray *remindersArray;
 
-- (NSManagedObjectContext *)getContext;
-
 @end

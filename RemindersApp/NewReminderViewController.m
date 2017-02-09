@@ -2,12 +2,11 @@
 //  NewReminderViewController.m
 //  RemindersApp
 
-
-
 #import "NewReminderViewController.h"
+#import "NotificationsManager.h"
 #import "AppDelegate.h"
+#import "Identifier+CoreDataClass.h"
 #import "OnlinePhotosViewController.h"
-
 
 @interface NewReminderViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, OnlinePhotosViewControllerDelegate>
 
@@ -22,7 +21,6 @@
 
 @property (nonatomic) NSMutableArray *remindersIDArray;
 @property (strong, nonatomic) Reminders *reminderNew;
-@property (nonatomic) NSString *reminderIDString;
 
 
 @end
@@ -39,18 +37,21 @@
     self.endTime.timeZone = [NSTimeZone defaultTimeZone];
     
     // Set initial value for Display
-    self.timesPerDayLabel.text = @"5";
-   
 }
 
 - (IBAction)newReminder:(UIBarButtonItem *)sender {
     
     if (self.reminder != nil) {
-        self.reminderIDString = @"edit";
         
         self.reminder.title = self.reminderTitle.text;
         self.reminder.details = self.reminderDetails.text;
         self.reminder.image = [NSData dataWithData:UIImagePNGRepresentation(self.reminderImage.image)];
+        self.reminder.displayFrequency = self.timesPerDayLabel.text.integerValue;
+        self.reminder.uniqueID = [[NSUUID UUID]UUIDString];
+
+        self.reminderNew.startDate = self.startTime.date;
+        self.reminderNew.endDate= self.endTime.date;
+        
         NSManagedObjectContext *context = [self getContext];
         
         [[self appDelegate] saveContext];
@@ -59,67 +60,106 @@
             NSLog(@"Save Failed: %@", error.localizedDescription);
         }
         
+        NSMutableArray *notifications = [NSMutableArray new];
+        
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+        NSManagedObjectContext *context1 = [self getContext];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Identifier" inManagedObjectContext:context1];
+        [fetchRequest setEntity:entity];
+        
+        NSError *error1 = nil;
+        NSArray *fetchedObjects = [context1 executeFetchRequest:fetchRequest error:&error1];
+        if (fetchedObjects == nil) {
+            NSLog(@"error: %@", error.localizedDescription);
+        }
+        notifications = [fetchedObjects mutableCopy];
+        
+        for (Identifier *identifier in notifications) {
+            [context deleteObject:identifier];
+        }
+        [notifications removeAllObjects];
+        
+        [[self appDelegate] saveContext];
+        // Use the notifications array to clear the Notifications Center
+        UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+        [center removeDeliveredNotificationsWithIdentifiers:notifications];
+        
+        
+        //[notifications removeAllObjects];
+        
     } else {
-    self.reminderIDString = @"new";
-
-    NSString *title = self.reminderTitle.text;
-    UIImage *image = self.reminderImage.image;
-    NSString *details = self.reminderDetails.text;
-    NSInteger displayFrequency = self.timesPerDayLabel.text.integerValue;
+        NSString *title = self.reminderTitle.text;
+        UIImage *image = self.reminderImage.image;
+        NSString *details = self.reminderDetails.text;
+        NSInteger displayFrequency = self.timesPerDayLabel.text.integerValue;
         NSDate *startDate = self.startTime.date;
         NSDate *endDate = self.endTime.date;
-    
-    NSManagedObjectContext *context = [self getContext];
-    self.reminderNew = [NSEntityDescription insertNewObjectForEntityForName:@"Reminders" inManagedObjectContext:context];
-    self.reminderNew.title = title;
-    self.reminderNew.details = details;
-    self.reminderNew.uniqueID = [[NSUUID UUID] UUIDString];
-    self.reminderNew.displayFrequency = displayFrequency;
-    self.reminderNew.image = UIImagePNGRepresentation(image);
-    self.reminderNew.startDate = startDate;
-    self.reminderNew.endDate = endDate;
-    NSError *error = nil;
-    if (![context save:&error]) {
-        NSLog(@"Save Failed: %@", error.localizedDescription);
-
-    }
-}
-    
-// ADD NOTIFICATIONS
-         NotificationsManager *notificationsManager = [NotificationsManager new];
         
-        // Build randomTimes Array
-        NSInteger timesPerDay = [self.timesPerDayLabel.text intValue]; // # Items in Array
-        NSDate *startTime = self.startTime.date; // Start Range of Array
-        NSDate *endTime = self.endTime.date; // End Range of Array
-        NSArray *randomTimesArray = [notificationsManager generateArrayOfRandomTimes:startTime toTime:endTime numberOfReminders:(int)timesPerDay];
-    
-    
-        // Use randomTimes Array to schedule notifcations
-    
-        self.remindersIDArray = [NSMutableArray new];
-    
-    
-        for (int i =0; i<randomTimesArray.count; i++) {
-            // Grab a time from randomTimes Array
-            NSDate *scheduledTime = randomTimesArray[i];
-            NSLog(@"Will fire at %@", scheduledTime);
-            
-            // Make Identifiers, pass into Local Array (*this needs to persist*)
-            NSString* identifier = [NSString stringWithFormat:@"%@%i", self.reminderIDString, i];
-            NSLog(@"%@",identifier);
-            [self.remindersIDArray addObject:identifier];
-
-            // Add Requests to Notification Center
-            // For Testing: NSDate *testDate = [NSDate dateWithTimeIntervalSinceNow:10];
-            UNNotificationRequest *request = [notificationsManager makeRequestFromReminderAndDateAndIdentifier:self.reminderNew date:scheduledTime identifer:identifier];
-            [notificationsManager addToNotificationCenter:request];
-            NSLog(@"The new requests were sent");
+        NSManagedObjectContext *context = [self getContext];
+        self.reminderNew = [NSEntityDescription insertNewObjectForEntityForName:@"Reminders" inManagedObjectContext:context];
+        self.reminderNew.title = title;
+        self.reminderNew.details = details;
+        self.reminderNew.uniqueID = [[NSUUID UUID] UUIDString];
+        self.reminderNew.displayFrequency = displayFrequency;
+        self.reminderNew.image = UIImagePNGRepresentation(image);
+        self.reminderNew.startDate = startDate;
+        self.reminderNew.endDate = endDate;
+        NSError *error = nil;
+        if (![context save:&error]) {
+            NSLog(@"Save Failed: %@", error.localizedDescription);
             
         }
+    }
+    
+    // ADD NOTIFICATIONS
+    NotificationsManager *notificationsManager = [NotificationsManager new];
+    
+    // Build randomTimes Array
+    NSInteger timesPerDay = [self.timesPerDayLabel.text intValue]; // # Items in Array
+    NSDate *startTime = self.startTime.date; // Start Range of Array
+    NSDate *endTime = self.endTime.date; // End Range of Array
+    NSArray *randomTimesArray = [notificationsManager generateArrayOfRandomTimes:startTime toTime:endTime numberOfReminders:(int)timesPerDay];
+    
+    
+    // Use randomTimes Array to schedule notifcations
+    
+    self.remindersIDArray = [NSMutableArray new];
+    
+    
+    for (int i =0; i<randomTimesArray.count; i++) {
+        // Grab a time from randomTimes Array
+        NSDate *scheduledTime = randomTimesArray[i];
+        NSLog(@"Will fire at %@", scheduledTime);
         
-        // Show Pending Requests
-        [notificationsManager showPendingNotifications];
+        // Make Identifiers, pass into Local Array (*this needs to persist*)
+        NSString* identifierID = [[NSUUID UUID] UUIDString];
+        NSLog(@"%@",identifierID);
+        [self.remindersIDArray addObject:identifierID];
+        
+        // Add Requests to Notification Center
+        // For Testing: NSDate *testDate = [NSDate dateWithTimeIntervalSinceNow:10];
+        
+        if (self.reminder == nil) {
+        UNNotificationRequest *request = [notificationsManager makeRequestFromReminderAndDateAndIdentifier:self.reminderNew date:scheduledTime identifer:identifierID];
+        [notificationsManager addToNotificationCenter:request];
+        NSLog(@"The new requests were sent");
+        } else {
+            UNNotificationRequest *request = [notificationsManager makeRequestFromReminderAndDateAndIdentifier:self.reminder date:scheduledTime identifer:identifierID];
+            [notificationsManager addToNotificationCenter:request];
+        }
+        NSManagedObjectContext *context = [self getContext];
+        Identifier *identifier = [NSEntityDescription insertNewObjectForEntityForName:@"Identifier" inManagedObjectContext:context];
+        identifier.scheduleIdentifier = identifierID;
+        
+        NSError *error = nil;
+        if (![context save:&error]) {
+            NSLog(@"Save Failed: %@", error.localizedDescription);
+            
+        }
+    }
+    
+    // Show Pending Requests
+    [notificationsManager showPendingNotifications];
     
     
     [self.delegate newReminderViewControllerDidAdd];
