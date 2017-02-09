@@ -27,10 +27,10 @@
 @implementation MasterTableViewController
 
 - (void)viewDidLoad {
-
+    
     [super viewDidLoad];
     [NotificationsManager SetupAndAskUserPermissions];
-
+    
     
     [super viewDidLoad];
     
@@ -61,12 +61,12 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-
+    
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-
+    
     return self.remindersArray.count;
 }
 
@@ -117,7 +117,7 @@
     self.context = [self getContext];
     [self.context deleteObject:reminderToDelete];
     
-     [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 
