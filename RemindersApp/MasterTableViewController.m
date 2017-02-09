@@ -6,16 +6,20 @@
 //  Copyright © 2017 Jonescr. All rights reserved.
 //
 
+
 #import "MasterTableViewController.h"
 #import "NewReminderViewController.h"
 #import "AppDelegate.h"
 #import "ReminderTableViewCell.h"
 #import "DetailViewController.h"
+#import "Identifier+CoreDataClass.h"
+#import "Reminders+CoreDataClass.h"
 
 //Notifcations
 #import "NotificationsManager.h"
 
 @import UserNotifications;
+
 @interface MasterTableViewController () <NewReminderViewControllerDelegate>
 
 @property (strong, nonatomic) NSManagedObjectContext *context;
@@ -73,10 +77,11 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ReminderTableViewCell *cell = (ReminderTableViewCell *) [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
-    Reminders *object = self.remindersArray[indexPath.row];
-    cell.titleLabel.text = object.title;
-    cell.detailsLabel.text = object.details;
-    cell.imageThumbnail.image = [UIImage imageWithData:object.image];
+    Reminders *reminderObject = self.remindersArray[indexPath.row];
+    cell.titleLabel.text = reminderObject.title;
+    cell.detailsLabel.text = reminderObject.details;
+    cell.imageThumbnail.image = [UIImage imageWithContentsOfFile:reminderObject.imagePath];
+
     
     return cell;
 }
@@ -85,10 +90,60 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         
+        
+        
+//        NSMutableArray *notifications = [NSMutableArray new];
+//        
+//        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+//        
+//        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Identifier" inManagedObjectContext:self.context];
+//        [fetchRequest setEntity:entity];
+//        
+//        NSError *error = nil;
+//        NSArray *fetchedObjects = [self.context executeFetchRequest:fetchRequest error:&error];
+//        if (fetchedObjects == nil) {
+//            NSLog(@"error: %@", error.localizedDescription);
+//        }
+//        notifications = [fetchedObjects mutableCopy];
+        
+//        for (Identifier *identifier in notifications) {
+//            [self.context deleteObject:identifier];
+//        }
+//        
+//        [notifications removeAllObjects];
+        
+       // [[self appDelegate] saveContext];
+        
+        
+        
+        // RR: COPIED CODE
+        Reminders *reminderTry = self.remindersArray[indexPath.row];
+
+        self.context = [self getContext];
+        
+        NSArray<Identifier*> *tempIdentifierArray = reminderTry.identifier.allObjects;
+        
+        NSMutableArray<NSString*> *tempIDStringArray = [NSMutableArray new];
+        
+        for (Identifier* ident in tempIdentifierArray) {
+            [tempIDStringArray addObject:ident.scheduleIdentifier];
+        };
+        
+         UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+        [center removePendingNotificationRequestsWithIdentifiers:tempIDStringArray];
+        
+        
+        [reminderTry removeIdentifier:reminderTry.identifier];
+        
         [self.context deleteObject:self.remindersArray[indexPath.row]];
         [self.remindersArray removeObjectAtIndex:indexPath.row];
+        
         [[self appDelegate] saveContext];
         
+
+        
+        
+        // End
         [tableView reloadData];
     }
 }
@@ -119,7 +174,6 @@
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }
-
 
 
 -(void)newReminderViewControllerDidAdd {
