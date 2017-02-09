@@ -40,7 +40,7 @@
     self.reminderDetails.textColor = [UIColor lightGrayColor];
     self.reminderTitle.autocapitalizationType = UITextAutocapitalizationTypeSentences;
     
-    self.timesPerDayStepper.minimumValue = 1;
+//    self.timesPerDayStepper.minimumValue = 1;
     
     if (self.reminder != nil) {
         self.startTime.date = self.reminder.startDate;
@@ -181,6 +181,7 @@
 - (IBAction)reminderTimesPerDay:(UIStepper *)sender {
     
     self.timesPerDayLabel.text = @(sender.value).stringValue;
+    sender.minimumValue = 1;
 
 }
 
