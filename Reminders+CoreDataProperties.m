@@ -2,7 +2,7 @@
 //  Reminders+CoreDataProperties.m
 //  RemindersApp
 //
-//  Created by Rajeev Ruparell on 2017-02-08.
+//  Created by Rajeev Ruparell on 2017-02-09.
 //  Copyright © 2017 Jonescr. All rights reserved.
 //  This file was automatically generated and should not be edited.
 //
@@ -19,10 +19,10 @@
 @dynamic displayFrequency;
 @dynamic endDate;
 @dynamic hasImage;
-@dynamic image;
 @dynamic startDate;
 @dynamic title;
 @dynamic uniqueID;
+@dynamic imagePath;
 @dynamic identifier;
 
 @end

@@ -5,6 +5,7 @@
 
 
 #import "NotificationsManager.h"
+#import <MobileCoreServices/MobileCoreServices.h>
 
 
 @implementation NotificationsManager
@@ -60,6 +61,18 @@
     content.title = reminder.title;
     content.body = reminder.details;
     content.categoryIdentifier = @"Reminders";
+    NSError *err;
+    UNNotificationAttachment *attachment =
+    [UNNotificationAttachment
+     attachmentWithIdentifier:@""
+     URL:[NSURL fileURLWithPath:reminder.imagePath]
+     options:@{UNNotificationAttachmentOptionsTypeHintKey: (__bridge NSString*)kUTTypeJPEG}
+     error:&err];
+    if (err) {
+        NSLog(@"Error creating attachment %@", err.localizedDescription);
+    } else {
+        content.attachments = @[attachment];
+    }
     
     
     return content;

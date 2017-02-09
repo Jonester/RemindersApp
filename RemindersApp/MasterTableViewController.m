@@ -76,7 +76,7 @@
     Reminders *object = self.remindersArray[indexPath.row];
     cell.titleLabel.text = object.title;
     cell.detailsLabel.text = object.details;
-    cell.imageThumbnail.image = [UIImage imageWithData:object.image];
+    //cell.imageThumbnail.image = [UIImage imageWithData:object.image];
     
     return cell;
 }

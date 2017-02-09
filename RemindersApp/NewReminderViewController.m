@@ -39,6 +39,17 @@
     // Set initial value for Display
 }
 
+- (NSString*)saveImage:(UIImage*)toSave {
+    NSString *documentDirPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+    NSString *imageName = [NSString stringWithFormat:@"%@.png", [NSUUID new]];
+    NSString *filePath = [documentDirPath stringByAppendingPathComponent:imageName];
+    NSData *imageData = UIImageJPEGRepresentation(toSave, 0.7);
+    // May want to consider scaling image down to reduce file size
+    // http://stackoverflow.com/questions/36624195/effective-way-to-generate-thumbnail-from-uiimage
+    [imageData writeToFile:filePath atomically:YES];
+    return filePath;
+}
+
 
 - (IBAction)newReminder:(UIBarButtonItem *)sender {
     
@@ -46,20 +57,26 @@
         
         self.reminder.title = self.reminderTitle.text;
         self.reminder.details = self.reminderDetails.text;
-        self.reminder.image = [NSData dataWithData:UIImagePNGRepresentation(self.reminderImage.image)];
+       // self.reminder.image = [NSData dataWithData:UIImagePNGRepresentation(self.reminderImage.image)];
+        self.reminder.imagePath = [self saveImage:self.reminderImage.image];
         self.reminder.displayFrequency = self.timesPerDayLabel.text.integerValue;
         self.reminder.uniqueID = [[NSUUID UUID]UUIDString];
 
         self.reminderNew.startDate = self.startTime.date;
         self.reminderNew.endDate= self.endTime.date;
         
+        
+        
+        // Save Image to Documents Folder
+ 
+        
+        
+        
+        
+        
         NSManagedObjectContext *context = [self getContext];
         
         [[self appDelegate] saveContext];
-        NSError *error = nil;
-        if (![context save:&error]) {
-            NSLog(@"Save Failed: %@", error.localizedDescription);
-        }
         
         NSMutableArray *notifications = [NSMutableArray new];
         
@@ -68,8 +85,8 @@
         NSEntityDescription *entity = [NSEntityDescription entityForName:@"Identifier" inManagedObjectContext:context1];
         [fetchRequest setEntity:entity];
         
-        NSError *error1 = nil;
-        NSArray *fetchedObjects = [context1 executeFetchRequest:fetchRequest error:&error1];
+        NSError *error = nil;
+        NSArray *fetchedObjects = [context1 executeFetchRequest:fetchRequest error:&error];
         if (fetchedObjects == nil) {
             NSLog(@"error: %@", error.localizedDescription);
         }
@@ -102,7 +119,8 @@
         self.reminderNew.details = details;
         self.reminderNew.uniqueID = [[NSUUID UUID] UUIDString];
         self.reminderNew.displayFrequency = displayFrequency;
-        self.reminderNew.image = UIImagePNGRepresentation(image);
+        //self.reminderNew.image = UIImagePNGRepresentation(image);
+        self.reminderNew.imagePath = [self saveImage:image];
         self.reminderNew.startDate = startDate;
         self.reminderNew.endDate = endDate;
         NSError *error = nil;
@@ -146,6 +164,7 @@
         NSLog(@"The new requests were sent");
         } else {
             UNNotificationRequest *request = [notificationsManager makeRequestFromReminderAndDateAndIdentifier:self.reminder date:scheduledTime identifer:identifierID];
+            
             [notificationsManager addToNotificationCenter:request];
         }
         NSManagedObjectContext *context = [self getContext];
@@ -223,7 +242,7 @@
 -(void)displayReminderForEdit: (Reminders *)reminder {
     self.reminderTitle.text = reminder.title;
     self.reminderDetails.text = reminder.details;
-    self.reminderImage.image = [UIImage imageWithData:reminder.image];
+    //self.reminderImage.image = [UIImage imageWithData:reminder.image];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

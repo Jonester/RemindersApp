@@ -9,14 +9,14 @@
         <attribute name="displayFrequency" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="endDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="hasImage" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="image" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="imagePath" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="startDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="uniqueID" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="identifier" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Identifier" inverseName="reminder" inverseEntity="Identifier" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Reminders" positionX="-252" positionY="-76" width="128" height="148"/>
         <element name="Identifier" positionX="-54" positionY="36" width="128" height="73"/>
+        <element name="Reminders" positionX="-252" positionY="-76" width="128" height="180"/>
     </elements>
 </model>
