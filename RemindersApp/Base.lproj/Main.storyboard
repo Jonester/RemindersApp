@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C68" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="0kN-vB-avC">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="0kN-vB-avC">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -454,8 +454,28 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search photo tags onine" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1DK-zq-gLX">
+                                <rect key="frame" x="16" y="84" width="240" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="68P-rl-yGG"/>
+                                    <constraint firstAttribute="height" constant="40" id="Aj1-hO-gyB"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qE2-SC-XAQ">
+                                <rect key="frame" x="264" y="84" width="95" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="iah-wF-xzL"/>
+                                </constraints>
+                                <state key="normal" title="Search"/>
+                                <connections>
+                                    <action selector="searchOnline:" destination="ykJ-bk-mGu" eventType="touchUpInside" id="5ju-Dv-bDn"/>
+                                </connections>
+                            </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ygR-wb-SR9">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
+                                <rect key="frame" x="0.0" y="134" width="375" height="533"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="D9s-G1-PFm">
                                     <size key="itemSize" width="145" height="150"/>
@@ -490,10 +510,15 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="ygR-wb-SR9" firstAttribute="leading" secondItem="Kiv-9G-XMT" secondAttribute="leading" id="Feg-Jr-s46"/>
-                            <constraint firstItem="AC5-TA-LkX" firstAttribute="top" secondItem="ygR-wb-SR9" secondAttribute="bottom" id="JPa-gj-NoG"/>
-                            <constraint firstItem="ygR-wb-SR9" firstAttribute="top" secondItem="Kiv-9G-XMT" secondAttribute="top" id="eQt-V9-Yp2"/>
-                            <constraint firstAttribute="trailing" secondItem="ygR-wb-SR9" secondAttribute="trailing" id="xFd-we-KM4"/>
+                            <constraint firstItem="ygR-wb-SR9" firstAttribute="top" secondItem="qE2-SC-XAQ" secondAttribute="bottom" constant="10" id="4N0-us-VQ0"/>
+                            <constraint firstItem="1DK-zq-gLX" firstAttribute="leading" secondItem="Kiv-9G-XMT" secondAttribute="leadingMargin" id="9d6-xL-WQJ"/>
+                            <constraint firstItem="1DK-zq-gLX" firstAttribute="top" secondItem="3ba-tv-WWC" secondAttribute="bottom" constant="20" id="Ffa-Fz-jTe"/>
+                            <constraint firstAttribute="bottom" secondItem="ygR-wb-SR9" secondAttribute="bottom" id="VCN-cS-fm0"/>
+                            <constraint firstAttribute="trailing" secondItem="ygR-wb-SR9" secondAttribute="trailing" id="VKI-dL-Uur"/>
+                            <constraint firstItem="qE2-SC-XAQ" firstAttribute="top" secondItem="3ba-tv-WWC" secondAttribute="bottom" constant="20" id="bTa-2c-F8H"/>
+                            <constraint firstItem="ygR-wb-SR9" firstAttribute="leading" secondItem="Kiv-9G-XMT" secondAttribute="leading" id="f0Z-FF-wcY"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="qE2-SC-XAQ" secondAttribute="trailing" id="ia4-yk-adj"/>
+                            <constraint firstItem="qE2-SC-XAQ" firstAttribute="leading" secondItem="1DK-zq-gLX" secondAttribute="trailing" constant="8" id="y7l-z7-QCJ"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
@@ -507,6 +532,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="collectionView" destination="ygR-wb-SR9" id="4qv-Ab-wvG"/>
+                        <outlet property="searchTextField" destination="1DK-zq-gLX" id="idg-DB-foo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Eg-r3-yAO" userLabel="First Responder" sceneMemberID="firstResponder"/>
