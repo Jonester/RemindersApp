@@ -37,6 +37,12 @@
     self.endTime.timeZone = [NSTimeZone defaultTimeZone];
     
     // Set initial value for Display
+    
+    self.reminderDetails.delegate = self;
+    self.reminderDetails.text = @"Enter reminder details...";
+    self.reminderDetails.textColor = [UIColor lightGrayColor];
+    
+    
 }
 
 - (IBAction)newReminder:(UIBarButtonItem *)sender {
@@ -232,10 +238,30 @@
         onlinePhotosViewController.delegate = self;
     }
 }
+
 -(void)onlinePhotosViewController:(OnlinePhotosViewController *)controller didAddPhoto:(Photo *)photo {
     
     [self.reminderImage setImage:photo.image];
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
+- (void)textViewDidBeginEditing:(UITextView *)textView
+{
+    if ([self.reminderDetails.text isEqualToString:@"Enter reminder details..."]) {
+        self.reminderDetails.text = @"";
+        self.reminderDetails.textColor = [UIColor blackColor];
+    }
+    [self.reminderDetails becomeFirstResponder];
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
+    if ([self.reminderDetails.text isEqualToString:@""]) {
+        self.reminderDetails.text = @"Enter reminder details...";
+        self.reminderDetails.textColor = [UIColor lightGrayColor];
+    }
+    [self.reminderDetails resignFirstResponder];
+}
+
 @end

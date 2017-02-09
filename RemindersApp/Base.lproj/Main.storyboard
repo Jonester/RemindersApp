@@ -139,7 +139,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="96"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iSD-0W-Qw3" id="qU8-MJ-LYg">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="95"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="96"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FxT-Xn-g3a">
@@ -244,8 +244,9 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="front" translatesAutoresizingMaskIntoConstraints="NO" id="d0V-yk-quJ">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="d0V-yk-quJ">
                                 <rect key="frame" x="68" y="425" width="240" height="150"/>
+                                <color key="backgroundColor" red="0.55300564240000005" green="0.80056423610000005" blue="0.9538574219" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="150" id="21O-ui-IY6"/>
                                     <constraint firstAttribute="width" constant="240" id="bdQ-Kz-Wz9"/>
@@ -564,9 +565,6 @@
             <point key="canvasLocation" x="2301.5999999999999" y="1021.4392803598201"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="front" width="300" height="300"/>
-    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="V8B-gG-hkf"/>
     </inferredMetricsTieBreakers>
