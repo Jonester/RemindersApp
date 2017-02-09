@@ -6,11 +6,13 @@
 //  Copyright © 2017 Jonescr. All rights reserved.
 //
 
+
 #import "MasterTableViewController.h"
 #import "NewReminderViewController.h"
 #import "AppDelegate.h"
 #import "ReminderTableViewCell.h"
 #import "DetailViewController.h"
+#import "Identifier+CoreDataClass.h"
 
 //Notifcations
 #import "NotificationsManager.h"
@@ -76,7 +78,8 @@
     Reminders *object = self.remindersArray[indexPath.row];
     cell.titleLabel.text = object.title;
     cell.detailsLabel.text = object.details;
-    //cell.imageThumbnail.image = [UIImage imageWithData:object.image];
+    cell.imageThumbnail.image = [UIImage imageWithContentsOfFile:object.imagePath];
+
     
     return cell;
 }
@@ -87,7 +90,38 @@
         
         [self.context deleteObject:self.remindersArray[indexPath.row]];
         [self.remindersArray removeObjectAtIndex:indexPath.row];
+        
+        NSMutableArray *notifications = [NSMutableArray new];
+        
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+        
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Identifier" inManagedObjectContext:self.context];
+        [fetchRequest setEntity:entity];
+        
+        NSError *error = nil;
+        NSArray *fetchedObjects = [self.context executeFetchRequest:fetchRequest error:&error];
+        if (fetchedObjects == nil) {
+            NSLog(@"error: %@", error.localizedDescription);
+        }
+        notifications = [fetchedObjects mutableCopy];
+        
+        for (Identifier *identifier in notifications) {
+            [self.context deleteObject:identifier];
+        }
+        
+        UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+        
+        [center removeDeliveredNotificationsWithIdentifiers:notifications];
+        
+        [notifications removeAllObjects];
+        
         [[self appDelegate] saveContext];
+        
+        // Use the notifications array to clear the Notifications Center
+        
+
+        
+        
         
         [tableView reloadData];
     }
@@ -119,7 +153,6 @@
     
      [self dismissViewControllerAnimated:YES completion:nil];
 }
-
 
 
 -(void)newReminderViewControllerDidAdd {

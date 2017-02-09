@@ -48,6 +48,7 @@
     NSData *imageData = UIImageJPEGRepresentation(toSave, 0.3);
     // May want to consider scaling image down to reduce file size
     // http://stackoverflow.com/questions/36624195/effective-way-to-generate-thumbnail-from-uiimage
+    
     [imageData writeToFile:filePath atomically:YES];
     return filePath;
 }
@@ -55,7 +56,8 @@
 
 - (IBAction)newReminder:(UIBarButtonItem *)sender {
     
-    if (self.reminder != nil) { //EDIT EXISTING REMINDER
+    if (self.reminder != nil) {
+        //EDIT EXISTING REMINDER
         
         self.reminder.title = self.reminderTitle.text;
         self.reminder.details = self.reminderDetails.text;
@@ -69,10 +71,10 @@
         
         self.context = [self getContext];
         
-        NSMutableArray *notifications = [NSMutableArray new];
+        NSMutableArray *identifiers = [NSMutableArray new];
         
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-//        NSManagedObjectContext *context1 = [self getContext];
+
         NSEntityDescription *entity = [NSEntityDescription entityForName:@"Identifier" inManagedObjectContext:self.context];
         [fetchRequest setEntity:entity];
         
@@ -81,22 +83,33 @@
         if (fetchedObjects == nil) {
             NSLog(@"error: %@", error.localizedDescription);
         }
-        notifications = [fetchedObjects mutableCopy];
         
-        for (Identifier *identifier in notifications) {
-            [self.context deleteObject:identifier];
-        }
-        [notifications removeAllObjects];
+        identifiers = [fetchedObjects mutableCopy];
         
-        [[self appDelegate] saveContext];
-        // Use the notifications array to clear the Notifications Center
+
+        NSArray<Identifier*> *tempIdentifierArray = self.reminder.identifier.allObjects;
+        
+        NSMutableArray<NSString*> *tempIDStringArray = [NSMutableArray new];
+        
+        for (Identifier* ident in tempIdentifierArray) {
+            [tempIDStringArray addObject:ident.scheduleIdentifier];
+        };
+    
+        
         UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
-        [center removeDeliveredNotificationsWithIdentifiers:notifications];
+        [center removePendingNotificationRequestsWithIdentifiers:tempIDStringArray];
         
         
-        //[notifications removeAllObjects];
+       [self.reminder removeIdentifier:self.reminder.identifier];
+
+        [[self appDelegate] saveContext];
         
-    } else { // NEW REMINDER
+        
+        
+        
+        
+    } else {
+        // NEW REMINDER
         
         
         NSString *title = self.reminderTitle.text;
@@ -170,6 +183,13 @@
         NSManagedObjectContext *context = [self getContext];
         Identifier *identifier = [NSEntityDescription insertNewObjectForEntityForName:@"Identifier" inManagedObjectContext:context];
         identifier.scheduleIdentifier = requestIdentifier;
+        //To set relationship in core data do this or the next commented out line
+        
+        if (self.reminder == nil) {
+        identifier.reminder = self.reminderNew;
+        } else {
+            identifier.reminder = self.reminder;
+        }
         
         NSError *error = nil;
         if (![context save:&error]) {
@@ -178,10 +198,10 @@
         }
     }
     
-    // Show Pending Requests
+    // Log Pending Requests
     [notificationsManager showPendingNotifications];
     
-    
+
     [self.delegate newReminderViewControllerDidAdd];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -215,6 +235,7 @@
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
     UIImage *image = [[UIImage alloc]init];
     image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    
     [self.reminderImage setImage:image];
     [self dismissViewControllerAnimated:YES completion:nil];
 }

@@ -55,7 +55,7 @@
     
     self.detailTitle.text = self.reminder.title;
     self.detailDetails.text = self.reminder.details;
-    //self.detailImage.image = [UIImage imageWithData:self.reminder.image];
+    self.detailImage.image = [UIImage imageWithContentsOfFile:self.reminder.imagePath];
     self.timesPerDayLabel.text = @(self.reminder.displayFrequency).stringValue;
     self.startTimeLabel.text  = startTimeString;
     self.endTimeLabel.text = endTimeString;
