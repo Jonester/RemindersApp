@@ -39,6 +39,7 @@
     // Set initial value for Display
 }
 
+
 - (IBAction)newReminder:(UIBarButtonItem *)sender {
     
     if (self.reminder != nil) {

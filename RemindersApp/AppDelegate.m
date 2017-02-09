@@ -2,13 +2,15 @@
 //  AppDelegate.m
 //  RemindersApp
 //
-//  Created by Chris Jones on 2017-02-06.
-//  Copyright © 2017 Jonescr. All rights reserved.
-//
+
 
 #import "AppDelegate.h"
+#import "NotificationsDelegate.h"
+#import "NotificationsManager.h"
 
 @interface AppDelegate ()
+
+@property (nonatomic) NotificationsDelegate *notificationsDelegate;
 
 @end
 
@@ -16,7 +18,16 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+  
+    
+    self.notificationsDelegate = [[NotificationsDelegate alloc] init];
+    
+    UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+    
+    center.delegate = self.notificationsDelegate;
+
+    
+    
     return YES;
 }
 
