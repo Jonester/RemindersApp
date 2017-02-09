@@ -1,5 +1,5 @@
 //
-//  Curved Edges + Black Boarders.h
+//  IntroViewController.h
 //  RemindersApp
 //
 //  Created by Tristan Wolf on 2017-02-09.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface Curved_Edges___Black_Boarders : UILabel
-
-@property (nonatomic) UILabel *label;
+@interface IntroViewController : UIViewController
 
 @end

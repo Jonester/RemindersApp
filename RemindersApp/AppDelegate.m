@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "IntroViewController.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +18,19 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    if([[NSUserDefaults standardUserDefaults] boolForKey:@"FirstLaunch"]) {
+        
+    } else {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"FirstLaunch"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        
+        self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        IntroViewController *introViewController = [storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([IntroViewController class])];
+        self.window.rootViewController = introViewController;
+        [self.window makeKeyAndVisible];
+    }
     return YES;
 }
 
