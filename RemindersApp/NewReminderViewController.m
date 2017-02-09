@@ -42,7 +42,11 @@
     self.reminderDetails.text = @"Enter reminder details...";
     self.reminderDetails.textColor = [UIColor lightGrayColor];
     
+    if (self.reminder != nil) {
+    self.startTime.date = self.reminder.startDate;
+    self.endTime.date = self.reminder.endDate;
     
+    }
 }
 
 - (IBAction)newReminder:(UIBarButtonItem *)sender {
@@ -55,8 +59,8 @@
         self.reminder.displayFrequency = self.timesPerDayLabel.text.integerValue;
         self.reminder.uniqueID = [[NSUUID UUID]UUIDString];
         
-        self.reminderNew.startDate = self.startTime.date;
-        self.reminderNew.endDate= self.endTime.date;
+        self.reminder.startDate = self.startTime.date;
+        self.reminder.endDate= self.endTime.date;
         
         NSManagedObjectContext *context = [self getContext];
         
@@ -172,8 +176,15 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+#pragma Stepper
+
 - (IBAction)reminderTimesPerDay:(UIStepper *)sender {
+    if (sender.value > 0) {
     self.timesPerDayLabel.text = @(sender.value).stringValue;
+    }
+    if (sender.value == 1) {
+        sender.minimumValue = 1;
+    }
 }
 
 - (IBAction)cancelReminder:(UIBarButtonItem *)sender {

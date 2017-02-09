@@ -351,11 +351,11 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Lji-fw-zMb">
-                                <rect key="frame" x="34.5" y="124" width="305" height="110"/>
+                                <rect key="frame" x="32" y="124" width="310" height="110"/>
                                 <color key="backgroundColor" red="0.89656984170681331" green="0.89656984170681331" blue="0.89656984170681331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="110" id="yD1-Jw-VeY"/>
-                                    <constraint firstAttribute="width" constant="305" id="zRa-IB-iH4"/>
+                                    <constraint firstAttribute="width" constant="310" id="zRa-IB-iH4"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -495,9 +495,9 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Title" id="V2G-T1-e0U">
-                        <barButtonItem key="rightBarButtonItem" title="Save" id="5Nj-Iw-MOM">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="5Nj-Iw-MOM">
                             <connections>
-                                <action selector="save:" destination="ykJ-bk-mGu" id="8jO-Hd-RkT"/>
+                                <action selector="cancelButton:" destination="ykJ-bk-mGu" id="Ehd-uw-5Fe"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
