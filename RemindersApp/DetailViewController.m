@@ -28,37 +28,29 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    [dateFormatter setDateFormat:@"hh:mm a"];
+    
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSManagedObjectContext *context = [self getContext];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Reminders" inManagedObjectContext:context];
     [fetchRequest setEntity:entity];
-    // Specify criteria for filtering which objects to fetch
-   // NSPredicate *predicate = [NSPredicate predicateWithFormat:@"<#format string#>", <#arguments#>];
-   // [fetchRequest setPredicate:predicate];
-    // Specify how the fetched objects should be sorted
-   // NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"<#key#>"
-   //                                                                ascending:YES];
-   // [fetchRequest setSortDescriptors:[NSArray arrayWithObjects:sortDescriptor, nil]];
     
     NSError *error = nil;
     NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
     if (fetchedObjects == nil) {
         NSLog(@"error : %@", error.localizedDescription);
     }
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-    [dateFormatter setDateFormat:@"hh:mm a"];
     
     NSString *startTimeString = [dateFormatter stringFromDate:self.reminder.startDate];
     NSString *endTimeString = [dateFormatter stringFromDate:self.reminder.endDate];
     
-    
-    
     self.detailTitle.text = self.reminder.title;
     self.detailDetails.text = self.reminder.details;
     self.detailImage.image = [UIImage imageWithData:self.reminder.image];
-    self.timesPerDayLabel.text = @(self.reminder.displayFrequency).stringValue;
-    self.startTimeLabel.text  = startTimeString;
-    self.endTimeLabel.text = endTimeString;
+    self.timesPerDayLabel.text = [NSString stringWithFormat:@"Times Per Day: %@", @(self.reminder.displayFrequency).stringValue];
+    self.startTimeLabel.text  = [NSString stringWithFormat:@"Between: %@", startTimeString];
+    self.endTimeLabel.text = [NSString stringWithFormat:@"End: %@", endTimeString];
 }
 
 - (void)didReceiveMemoryWarning {

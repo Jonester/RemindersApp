@@ -21,6 +21,7 @@
 
 @property (nonatomic) NSMutableArray *remindersIDArray;
 @property (strong, nonatomic) Reminders *reminderNew;
+@property (weak, nonatomic) IBOutlet UIStepper *timesPerDayStepper;
 
 
 @end
@@ -32,11 +33,24 @@
     
     [self displayReminderForEdit:self.reminder];
     
-    // Set Date Picker Time Zone
     self.startTime.timeZone = [NSTimeZone defaultTimeZone];
     self.endTime.timeZone = [NSTimeZone defaultTimeZone];
+    self.reminderDetails.delegate = self;
+    self.reminderDetails.text = @"Enter reminder details...";
+    self.reminderDetails.textColor = [UIColor lightGrayColor];
+    self.reminderTitle.autocapitalizationType = UITextAutocapitalizationTypeSentences;
     
-    // Set initial value for Display
+//    self.timesPerDayStepper.minimumValue = 1;
+    
+    if (self.reminder != nil) {
+        self.startTime.date = self.reminder.startDate;
+        self.endTime.date = self.reminder.endDate;
+        self.reminderDetails.text = self.reminder.details;
+        self.reminderDetails.textColor = [UIColor blackColor];
+        self.reminderTitle.text = self.reminder.title;
+        self.timesPerDayLabel.text = @(self.reminder.displayFrequency).stringValue;
+        self.timesPerDayStepper.value = self.reminder.displayFrequency;
+    }
 }
 
 
@@ -49,9 +63,9 @@
         self.reminder.image = [NSData dataWithData:UIImagePNGRepresentation(self.reminderImage.image)];
         self.reminder.displayFrequency = self.timesPerDayLabel.text.integerValue;
         self.reminder.uniqueID = [[NSUUID UUID]UUIDString];
-
-        self.reminderNew.startDate = self.startTime.date;
-        self.reminderNew.endDate= self.endTime.date;
+        
+        self.reminder.startDate = self.startTime.date;
+        self.reminder.endDate= self.endTime.date;
         
         NSManagedObjectContext *context = [self getContext];
         
@@ -80,13 +94,10 @@
         }
         [notifications removeAllObjects];
         
-        [[self appDelegate] saveContext];
-        // Use the notifications array to clear the Notifications Center
         UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
         [center removeDeliveredNotificationsWithIdentifiers:notifications];
         
-        
-        //[notifications removeAllObjects];
+        [[self appDelegate] saveContext];
         
     } else {
         NSString *title = self.reminderTitle.text;
@@ -108,7 +119,6 @@
         NSError *error = nil;
         if (![context save:&error]) {
             NSLog(@"Save Failed: %@", error.localizedDescription);
-            
         }
     }
     
@@ -141,9 +151,9 @@
         // For Testing: NSDate *testDate = [NSDate dateWithTimeIntervalSinceNow:10];
         
         if (self.reminder == nil) {
-        UNNotificationRequest *request = [notificationsManager makeRequestFromReminderAndDateAndIdentifier:self.reminderNew date:scheduledTime identifer:identifierID];
-        [notificationsManager addToNotificationCenter:request];
-        NSLog(@"The new requests were sent");
+            UNNotificationRequest *request = [notificationsManager makeRequestFromReminderAndDateAndIdentifier:self.reminderNew date:scheduledTime identifer:identifierID];
+            [notificationsManager addToNotificationCenter:request];
+            NSLog(@"The new requests were sent");
         } else {
             UNNotificationRequest *request = [notificationsManager makeRequestFromReminderAndDateAndIdentifier:self.reminder date:scheduledTime identifer:identifierID];
             [notificationsManager addToNotificationCenter:request];
@@ -167,8 +177,13 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+#pragma Stepper
+
 - (IBAction)reminderTimesPerDay:(UIStepper *)sender {
+    
     self.timesPerDayLabel.text = @(sender.value).stringValue;
+    sender.minimumValue = 1;
+
 }
 
 - (IBAction)cancelReminder:(UIBarButtonItem *)sender {
@@ -233,10 +248,30 @@
         onlinePhotosViewController.delegate = self;
     }
 }
+
 -(void)onlinePhotosViewController:(OnlinePhotosViewController *)controller didAddPhoto:(Photo *)photo {
     
     [self.reminderImage setImage:photo.image];
     
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)textViewDidBeginEditing:(UITextView *)textView
+{
+    if ([self.reminderDetails.text isEqualToString:@"Enter reminder details..."]) {
+        self.reminderDetails.text = @"";
+        self.reminderDetails.textColor = [UIColor blackColor];
     }
+    [self.reminderDetails becomeFirstResponder];
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
+    if ([self.reminderDetails.text isEqualToString:@""]) {
+        self.reminderDetails.text = @"Enter reminder details...";
+        self.reminderDetails.textColor = [UIColor lightGrayColor];
+    }
+    [self.reminderDetails resignFirstResponder];
+}
+
 @end
