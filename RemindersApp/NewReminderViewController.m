@@ -21,6 +21,7 @@
 
 @property (nonatomic) NSMutableArray *remindersIDArray;
 @property (strong, nonatomic) Reminders *reminderNew;
+@property (weak, nonatomic) IBOutlet UIStepper *timesPerDayStepper;
 
 
 @end
@@ -32,20 +33,23 @@
     
     [self displayReminderForEdit:self.reminder];
     
-    // Set Date Picker Time Zone
     self.startTime.timeZone = [NSTimeZone defaultTimeZone];
     self.endTime.timeZone = [NSTimeZone defaultTimeZone];
-    
-    // Set initial value for Display
-    
     self.reminderDetails.delegate = self;
     self.reminderDetails.text = @"Enter reminder details...";
     self.reminderDetails.textColor = [UIColor lightGrayColor];
+    self.reminderTitle.autocapitalizationType = UITextAutocapitalizationTypeSentences;
+    
+    self.timesPerDayStepper.minimumValue = 1;
     
     if (self.reminder != nil) {
-    self.startTime.date = self.reminder.startDate;
-    self.endTime.date = self.reminder.endDate;
-    
+        self.startTime.date = self.reminder.startDate;
+        self.endTime.date = self.reminder.endDate;
+        self.reminderDetails.text = self.reminder.details;
+        self.reminderDetails.textColor = [UIColor blackColor];
+        self.reminderTitle.text = self.reminder.title;
+        self.timesPerDayLabel.text = @(self.reminder.displayFrequency).stringValue;
+        self.timesPerDayStepper.value = self.reminder.displayFrequency;
     }
 }
 
@@ -89,13 +93,10 @@
         }
         [notifications removeAllObjects];
         
-        [[self appDelegate] saveContext];
-        // Use the notifications array to clear the Notifications Center
         UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
         [center removeDeliveredNotificationsWithIdentifiers:notifications];
         
-        
-        //[notifications removeAllObjects];
+        [[self appDelegate] saveContext];
         
     } else {
         NSString *title = self.reminderTitle.text;
@@ -117,7 +118,6 @@
         NSError *error = nil;
         if (![context save:&error]) {
             NSLog(@"Save Failed: %@", error.localizedDescription);
-            
         }
     }
     
@@ -179,12 +179,9 @@
 #pragma Stepper
 
 - (IBAction)reminderTimesPerDay:(UIStepper *)sender {
-    if (sender.value > 0) {
+    
     self.timesPerDayLabel.text = @(sender.value).stringValue;
-    }
-    if (sender.value == 1) {
-        sender.minimumValue = 1;
-    }
+
 }
 
 - (IBAction)cancelReminder:(UIBarButtonItem *)sender {
