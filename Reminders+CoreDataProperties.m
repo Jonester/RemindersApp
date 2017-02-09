@@ -17,8 +17,10 @@
 
 @dynamic details;
 @dynamic displayFrequency;
+@dynamic endDate;
 @dynamic hasImage;
 @dynamic image;
+@dynamic startDate;
 @dynamic title;
 @dynamic uniqueID;
 @dynamic identifier;

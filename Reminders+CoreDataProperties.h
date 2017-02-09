@@ -18,8 +18,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nullable, nonatomic, copy) NSString *details;
 @property (nonatomic) int16_t displayFrequency;
+@property (nullable, nonatomic, copy) NSDate *endDate;
 @property (nonatomic) BOOL hasImage;
 @property (nullable, nonatomic, retain) NSData *image;
+@property (nullable, nonatomic, copy) NSDate *startDate;
 @property (nullable, nonatomic, copy) NSString *title;
 @property (nullable, nonatomic, copy) NSString *uniqueID;
 @property (nullable, nonatomic, retain) NSSet<Identifier *> *identifier;

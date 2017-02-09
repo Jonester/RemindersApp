@@ -6,18 +6,22 @@
 #import "NotificationsManager.h"
 #import "AppDelegate.h"
 #import "Identifier+CoreDataClass.h"
+#import "OnlinePhotosViewController.h"
 
-@interface NewReminderViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface NewReminderViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, OnlinePhotosViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *reminderTitle;
-@property (weak, nonatomic) IBOutlet UITextField *reminderDetails;
+
 @property (weak, nonatomic) IBOutlet UIImageView *reminderImage;
+@property (weak, nonatomic) IBOutlet UITextView *reminderDetails;
+
 @property (weak, nonatomic) IBOutlet UILabel *timesPerDayLabel;
 @property (weak, nonatomic) IBOutlet UIDatePicker *startTime;
 @property (weak, nonatomic) IBOutlet UIDatePicker *endTime;
 
 @property (nonatomic) NSMutableArray *remindersIDArray;
 @property (strong, nonatomic) Reminders *reminderNew;
+
 
 @end
 
@@ -33,9 +37,6 @@
     self.endTime.timeZone = [NSTimeZone defaultTimeZone];
     
     // Set initial value for Display
-    self.timesPerDayLabel.text = @"1";
-    self.reminderDetails.contentVerticalAlignment = UIControlContentVerticalAlignmentTop;
-    
 }
 
 - (IBAction)newReminder:(UIBarButtonItem *)sender {
@@ -48,6 +49,9 @@
         self.reminder.displayFrequency = self.timesPerDayLabel.text.integerValue;
         self.reminder.uniqueID = [[NSUUID UUID]UUIDString];
 
+        self.reminderNew.startDate = self.startTime.date;
+        self.reminderNew.endDate= self.endTime.date;
+        
         NSManagedObjectContext *context = [self getContext];
         
         [[self appDelegate] saveContext];
@@ -84,12 +88,12 @@
         //[notifications removeAllObjects];
         
     } else {
-        
-        
         NSString *title = self.reminderTitle.text;
         UIImage *image = self.reminderImage.image;
         NSString *details = self.reminderDetails.text;
         NSInteger displayFrequency = self.timesPerDayLabel.text.integerValue;
+        NSDate *startDate = self.startTime.date;
+        NSDate *endDate = self.endTime.date;
         
         NSManagedObjectContext *context = [self getContext];
         self.reminderNew = [NSEntityDescription insertNewObjectForEntityForName:@"Reminders" inManagedObjectContext:context];
@@ -98,6 +102,8 @@
         self.reminderNew.uniqueID = [[NSUUID UUID] UUIDString];
         self.reminderNew.displayFrequency = displayFrequency;
         self.reminderNew.image = UIImagePNGRepresentation(image);
+        self.reminderNew.startDate = startDate;
+        self.reminderNew.endDate = endDate;
         NSError *error = nil;
         if (![context save:&error]) {
             NSLog(@"Save Failed: %@", error.localizedDescription);
@@ -132,10 +138,15 @@
         
         // Add Requests to Notification Center
         // For Testing: NSDate *testDate = [NSDate dateWithTimeIntervalSinceNow:10];
+        
+        if (self.reminder == nil) {
         UNNotificationRequest *request = [notificationsManager makeRequestFromReminderAndDateAndIdentifier:self.reminderNew date:scheduledTime identifer:identifierID];
         [notificationsManager addToNotificationCenter:request];
         NSLog(@"The new requests were sent");
-        
+        } else {
+            UNNotificationRequest *request = [notificationsManager makeRequestFromReminderAndDateAndIdentifier:self.reminder date:scheduledTime identifer:identifierID];
+            [notificationsManager addToNotificationCenter:request];
+        }
         NSManagedObjectContext *context = [self getContext];
         Identifier *identifier = [NSEntityDescription insertNewObjectForEntityForName:@"Identifier" inManagedObjectContext:context];
         identifier.scheduleIdentifier = identifierID;
@@ -214,4 +225,17 @@
     self.reminderImage.image = [UIImage imageWithData:reminder.image];
 }
 
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"collectionviewcontroller"]) {
+        UINavigationController *navigationController = segue.destinationViewController;
+        OnlinePhotosViewController *onlinePhotosViewController = [navigationController viewControllers][0];
+        onlinePhotosViewController.delegate = self;
+    }
+}
+-(void)onlinePhotosViewController:(OnlinePhotosViewController *)controller didAddPhoto:(Photo *)photo {
+    
+    [self.reminderImage setImage:photo.image];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+    }
 @end
