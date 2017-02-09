@@ -15,7 +15,7 @@
 @property (nonatomic) NSMutableArray *photos;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (nonatomic) CollectionViewCell *cell;
-
+@property (weak, nonatomic) IBOutlet UITextField *searchTextField;
 
 @end
 
@@ -27,13 +27,17 @@
     
     NSURLComponents *comps = [NSURLComponents componentsWithString:@"https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=274d899f647849f684a98a2c86588897&tags=landscape&safe_search=1&extras=url_m&per_page=50&format=json&nojsoncallback=1"];
     
-    NSURL *url = comps.URL;
+    [self configureURL:comps.URL];
     
+}
+
+-(void)configureURL:(NSURL *)url {
     
+    NSURLRequest *request = [[NSURLRequest alloc]initWithURL:url];
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
     
-    NSURLSessionTask *task = [session dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error) {
             NSLog(@"error : %@", error.localizedDescription);
             return;
@@ -45,23 +49,27 @@
             NSLog(@"JSON error : %@", jsonError.localizedDescription);
             return;
         }
+        NSMutableArray *photos = [[NSMutableArray alloc] init];
         for (NSDictionary *photo in jsonDict[@"photos"][@"photo"]) {
-            NSString *title = photo[@"title"];
-            NSString *photoURLString = photo[@"url_m"];
-            NSURL *photoURL = [NSURL URLWithString:photoURLString];
-            
-            Photo *photo = [[Photo alloc]initWithURL:photoURL andTitle:title];
-            [self.photos addObject:photo];
+            if (photos.count <= 100) {
+                NSString *title = photo[@"title"];
+                NSString *photoURLString = photo[@"url_m"];
+                NSURL *photoURL = [NSURL URLWithString:photoURLString];
+                
+                Photo *photo = [[Photo alloc]initWithURL:photoURL andTitle:title];
+                [photos addObject:photo];
+            } else {
+                break;
+            }
         }
-        dispatch_async(dispatch_get_main_queue(), ^{
+        self.photos = photos;
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             [self.collectionView reloadData];
-        });
+        }];
     }];
-    
-    [task resume];
+    [dataTask resume];
     
 }
-
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 1;
@@ -82,7 +90,6 @@
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    
     Photo *photo = self.photos[indexPath.item];
     [self.delegate onlinePhotosViewController:self didAddPhoto:photo];
     
@@ -97,6 +104,17 @@
 }
 - (IBAction)cancelButton:(UIBarButtonItem *)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)searchOnline:(UIButton *)sender {
+    
+    NSString *textFieldString = self.searchTextField.text;
+    NSString *searchString = [textFieldString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
+    NSString *urlString = [NSString stringWithFormat:@"https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=274d899f647849f684a98a2c86588897&tags=%@&safe_search=1&extras=url_m&per_page=50&format=json&nojsoncallback=1",searchString];
+    
+    NSURL *comps = [NSURL URLWithString:urlString];
+    
+    [self configureURL:comps];
 }
 
 /*
