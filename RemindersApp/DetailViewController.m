@@ -28,6 +28,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    [dateFormatter setDateFormat:@"hh:mm a"];
+    
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSManagedObjectContext *context = [self getContext];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Reminders" inManagedObjectContext:context];
@@ -38,8 +41,6 @@
     if (fetchedObjects == nil) {
         NSLog(@"error : %@", error.localizedDescription);
     }
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-    [dateFormatter setDateFormat:@"hh:mm a"];
     
     NSString *startTimeString = [dateFormatter stringFromDate:self.reminder.startDate];
     NSString *endTimeString = [dateFormatter stringFromDate:self.reminder.endDate];
@@ -47,8 +48,6 @@
     self.detailTitle.text = self.reminder.title;
     self.detailDetails.text = self.reminder.details;
     self.detailImage.image = [UIImage imageWithData:self.reminder.image];
-    self.timesPerDayLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    self.timesPerDayLabel.numberOfLines = 1;
     self.timesPerDayLabel.text = [NSString stringWithFormat:@"Times Per Day: %@", @(self.reminder.displayFrequency).stringValue];
     self.startTimeLabel.text  = [NSString stringWithFormat:@"Between: %@", startTimeString];
     self.endTimeLabel.text = [NSString stringWithFormat:@"End: %@", endTimeString];
