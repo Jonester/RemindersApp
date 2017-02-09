@@ -25,31 +25,19 @@
 };
 
 
-// Create Action
+// Build Request
 
--(UNNotificationAction*)createAction:(NSString*)identifier title:(NSString*)title {
+-(UNNotificationRequest*)makeRequestFromReminder:(Reminders*)reminder andDate:(NSDate*)date andIdentifer:(NSString*)identifier {
     
-    UNNotificationAction *action = [UNNotificationAction actionWithIdentifier:identifier title:title options:UNNotificationActionOptionNone];
-    
-    return action;
-    
-};
-
-
-// Build Request (+ Helper Methods)
-
--(UNNotificationRequest*)makeRequestFromReminderAndDateAndIdentifier:(Reminders*)reminder date:(NSDate*)date identifer:(NSString*)identifier {
-    
-    
+    // Content
     UNMutableNotificationContent *content = [self makeContentFromReminder:reminder];
     
+    // Trigger
     UNCalendarNotificationTrigger *trigger = [self makeTriggerFromDate:date];
     
-    
+    // Build and Return Request
     UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier content:content trigger:trigger];
-    
-    
-    
+
     return request;
     
 }
@@ -61,11 +49,31 @@
     content.title = reminder.title;
     content.body = reminder.details;
     content.categoryIdentifier = @"Reminders";
+    
+    
+    
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    // Getting a URL to the temp file to a randomly named file in the temp directory
+    NSURL *tmpFileURL = [[fileManager temporaryDirectory]
+                         URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.jpg", [NSUUID new]]];
+    
+    // Copying the image from the path to the temp file
+    [fileManager copyItemAtURL:[NSURL fileURLWithPath:reminder.imagePath]
+                         toURL:tmpFileURL
+                         error:nil];
+    
+    
+
+    
+    // Make Attachment Object
+    
     NSError *err;
     UNNotificationAttachment *attachment =
     [UNNotificationAttachment
      attachmentWithIdentifier:@""
-     URL:[NSURL fileURLWithPath:reminder.imagePath]
+     URL:tmpFileURL
      options:@{UNNotificationAttachmentOptionsTypeHintKey: (__bridge NSString*)kUTTypeJPEG}
      error:&err];
     if (err) {
@@ -79,6 +87,7 @@
     
 }
 
+
 -(UNCalendarNotificationTrigger*)makeTriggerFromDate:(NSDate*)date {
     
     NSDateComponents *triggerDate = [[NSCalendar currentCalendar] components:NSCalendarUnitYear+NSCalendarUnitMonth+NSCalendarUnitDay+NSCalendarUnitHour+NSCalendarUnitMinute+NSCalendarUnitSecond fromDate:date];
@@ -91,9 +100,10 @@
 
 // Add to Notification Center
 
--(void)addToNotificationCenter:(UNNotificationRequest*)request {
+-(void)addRequestToNotificationCenter:(UNNotificationRequest*)request {
     
     UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+    
     [center addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
         if (error !=nil) {
             NSLog(@"%@",error);
@@ -131,5 +141,15 @@ UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotification
     }
 }];
 }
+
+
+// Create Action
+
+-(UNNotificationAction*)createAction:(NSString*)identifier title:(NSString*)title {
+    
+    UNNotificationAction *action = [UNNotificationAction actionWithIdentifier:identifier title:title options:UNNotificationActionOptionNone];
+    return action;
+    
+};
 
 @end

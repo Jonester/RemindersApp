@@ -19,9 +19,10 @@
 @property (weak, nonatomic) IBOutlet UIDatePicker *startTime;
 @property (weak, nonatomic) IBOutlet UIDatePicker *endTime;
 
-@property (nonatomic) NSMutableArray *remindersIDArray;
+@property (nonatomic) NSMutableArray *IdentifiersArray;
 @property (strong, nonatomic) Reminders *reminderNew;
 
+@property (strong, nonatomic) NSManagedObjectContext *context;
 
 @end
 
@@ -39,11 +40,12 @@
     // Set initial value for Display
 }
 
+
 - (NSString*)saveImage:(UIImage*)toSave {
     NSString *documentDirPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
-    NSString *imageName = [NSString stringWithFormat:@"%@.png", [NSUUID new]];
+    NSString *imageName = [NSString stringWithFormat:@"%@.jpg", [NSUUID new]];
     NSString *filePath = [documentDirPath stringByAppendingPathComponent:imageName];
-    NSData *imageData = UIImageJPEGRepresentation(toSave, 0.7);
+    NSData *imageData = UIImageJPEGRepresentation(toSave, 0.3);
     // May want to consider scaling image down to reduce file size
     // http://stackoverflow.com/questions/36624195/effective-way-to-generate-thumbnail-from-uiimage
     [imageData writeToFile:filePath atomically:YES];
@@ -53,47 +55,36 @@
 
 - (IBAction)newReminder:(UIBarButtonItem *)sender {
     
-    if (self.reminder != nil) {
+    if (self.reminder != nil) { //EDIT EXISTING REMINDER
         
         self.reminder.title = self.reminderTitle.text;
         self.reminder.details = self.reminderDetails.text;
-       // self.reminder.image = [NSData dataWithData:UIImagePNGRepresentation(self.reminderImage.image)];
-        self.reminder.imagePath = [self saveImage:self.reminderImage.image];
         self.reminder.displayFrequency = self.timesPerDayLabel.text.integerValue;
-        self.reminder.uniqueID = [[NSUUID UUID]UUIDString];
-
+        //self.reminder.uniqueID = [[NSUUID UUID]UUIDString];
         self.reminderNew.startDate = self.startTime.date;
         self.reminderNew.endDate= self.endTime.date;
-        
-        
-        
-        // Save Image to Documents Folder
- 
-        
-        
-        
-        
-        
-        NSManagedObjectContext *context = [self getContext];
+        self.reminder.imagePath = [self saveImage:self.reminderImage.image];
         
         [[self appDelegate] saveContext];
+        
+        self.context = [self getContext];
         
         NSMutableArray *notifications = [NSMutableArray new];
         
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-        NSManagedObjectContext *context1 = [self getContext];
-        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Identifier" inManagedObjectContext:context1];
+//        NSManagedObjectContext *context1 = [self getContext];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Identifier" inManagedObjectContext:self.context];
         [fetchRequest setEntity:entity];
         
         NSError *error = nil;
-        NSArray *fetchedObjects = [context1 executeFetchRequest:fetchRequest error:&error];
+        NSArray *fetchedObjects = [self.context executeFetchRequest:fetchRequest error:&error];
         if (fetchedObjects == nil) {
             NSLog(@"error: %@", error.localizedDescription);
         }
         notifications = [fetchedObjects mutableCopy];
         
         for (Identifier *identifier in notifications) {
-            [context deleteObject:identifier];
+            [self.context deleteObject:identifier];
         }
         [notifications removeAllObjects];
         
@@ -105,7 +96,9 @@
         
         //[notifications removeAllObjects];
         
-    } else {
+    } else { // NEW REMINDER
+        
+        
         NSString *title = self.reminderTitle.text;
         UIImage *image = self.reminderImage.image;
         NSString *details = self.reminderDetails.text;
@@ -113,16 +106,18 @@
         NSDate *startDate = self.startTime.date;
         NSDate *endDate = self.endTime.date;
         
+        
         NSManagedObjectContext *context = [self getContext];
         self.reminderNew = [NSEntityDescription insertNewObjectForEntityForName:@"Reminders" inManagedObjectContext:context];
         self.reminderNew.title = title;
         self.reminderNew.details = details;
-        self.reminderNew.uniqueID = [[NSUUID UUID] UUIDString];
+       // self.reminderNew.uniqueID = [[NSUUID UUID] UUIDString];
         self.reminderNew.displayFrequency = displayFrequency;
-        //self.reminderNew.image = UIImagePNGRepresentation(image);
-        self.reminderNew.imagePath = [self saveImage:image];
         self.reminderNew.startDate = startDate;
         self.reminderNew.endDate = endDate;
+        self.reminderNew.imagePath = [self saveImage:image];
+        
+        
         NSError *error = nil;
         if (![context save:&error]) {
             NSLog(@"Save Failed: %@", error.localizedDescription);
@@ -130,20 +125,19 @@
         }
     }
     
-    // ADD NOTIFICATIONS
+    // ADD TO NOTIFICATIONS CENTER
     NotificationsManager *notificationsManager = [NotificationsManager new];
     
-    // Build randomTimes Array
+    // 1. Build randomTimes Array
     NSInteger timesPerDay = [self.timesPerDayLabel.text intValue]; // # Items in Array
-    NSDate *startTime = self.startTime.date; // Start Range of Array
-    NSDate *endTime = self.endTime.date; // End Range of Array
+    NSDate *startTime = self.startTime.date;
+    NSDate *endTime = self.endTime.date;
     NSArray *randomTimesArray = [notificationsManager generateArrayOfRandomTimes:startTime toTime:endTime numberOfReminders:(int)timesPerDay];
     
+    // (An array for Request UniqueIDs)
+    self.IdentifiersArray = [NSMutableArray new];
     
-    // Use randomTimes Array to schedule notifcations
-    
-    self.remindersIDArray = [NSMutableArray new];
-    
+    // 2. Use randomTimes Array to schedule notifcations
     
     for (int i =0; i<randomTimesArray.count; i++) {
         // Grab a time from randomTimes Array
@@ -151,25 +145,31 @@
         NSLog(@"Will fire at %@", scheduledTime);
         
         // Make Identifiers, pass into Local Array (*this needs to persist*)
-        NSString* identifierID = [[NSUUID UUID] UUIDString];
-        NSLog(@"%@",identifierID);
-        [self.remindersIDArray addObject:identifierID];
+        NSString* requestIdentifier = [[NSUUID UUID] UUIDString];
+        NSLog(@"%@",requestIdentifier);
+        [self.IdentifiersArray addObject:requestIdentifier];
         
-        // Add Requests to Notification Center
-        // For Testing: NSDate *testDate = [NSDate dateWithTimeIntervalSinceNow:10];
         
         if (self.reminder == nil) {
-        UNNotificationRequest *request = [notificationsManager makeRequestFromReminderAndDateAndIdentifier:self.reminderNew date:scheduledTime identifer:identifierID];
-        [notificationsManager addToNotificationCenter:request];
-        NSLog(@"The new requests were sent");
-        } else {
-            UNNotificationRequest *request = [notificationsManager makeRequestFromReminderAndDateAndIdentifier:self.reminder date:scheduledTime identifer:identifierID];
             
-            [notificationsManager addToNotificationCenter:request];
+            // CREATE REQUEST
+            UNNotificationRequest *request = [notificationsManager makeRequestFromReminder:self.reminderNew andDate:scheduledTime andIdentifer:requestIdentifier];
+            
+            // Pass to Notification Center
+            [notificationsManager addRequestToNotificationCenter:request];
+            NSLog(@"New requests sent");
+            
+        } else {
+            UNNotificationRequest *request =
+            [notificationsManager makeRequestFromReminder:self.reminder andDate:scheduledTime andIdentifer:requestIdentifier];
+
+            [notificationsManager addRequestToNotificationCenter:request];
         }
+        
+        
         NSManagedObjectContext *context = [self getContext];
         Identifier *identifier = [NSEntityDescription insertNewObjectForEntityForName:@"Identifier" inManagedObjectContext:context];
-        identifier.scheduleIdentifier = identifierID;
+        identifier.scheduleIdentifier = requestIdentifier;
         
         NSError *error = nil;
         if (![context save:&error]) {

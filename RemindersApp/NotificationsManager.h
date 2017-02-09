@@ -15,12 +15,14 @@
 -(UNNotificationAction*)createAction:(NSString*)identifier title:(NSString*)title;
 
 
--(UNNotificationRequest*)makeRequestFromReminderAndDateAndIdentifier:(Reminders*)reminder date:(NSDate*)date identifer:(NSString*)identifier;
+-(UNNotificationRequest*)makeRequestFromReminder:(Reminders*)reminder andDate:(NSDate*)date andIdentifer:(NSString*)identifier;
+-(void)addRequestToNotificationCenter:(UNNotificationRequest*)request;
+
 -(UNMutableNotificationContent*)makeContentFromReminder: (Reminders*)reminder;
 -(UNCalendarNotificationTrigger*)makeTriggerFromDate:(NSDate*)date;
 
 
--(void)addToNotificationCenter:(UNNotificationRequest*)request;
+
 -(NSMutableArray*) generateArrayOfRandomTimes:(NSDate*) startTime toTime:(NSDate *) endTime numberOfReminders: (int) elements;
 
 -(void)showPendingNotifications;
