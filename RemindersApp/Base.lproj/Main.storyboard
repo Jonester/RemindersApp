@@ -126,7 +126,7 @@
             </objects>
             <point key="canvasLocation" x="2301.5999999999999" y="-464.6176911544228"/>
         </scene>
-        <!--Master Table View Controller-->
+        <!--Reminders-->
         <scene sceneID="qFo-KP-q7x">
             <objects>
                 <tableViewController id="vqo-Mn-DNZ" customClass="MasterTableViewController" sceneMemberID="viewController">
@@ -192,7 +192,7 @@
                             <outlet property="delegate" destination="vqo-Mn-DNZ" id="NKQ-Ey-W4D"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="G9N-qA-RvG">
+                    <navigationItem key="navigationItem" title="Reminders" id="G9N-qA-RvG">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="jEc-Q6-g9z">
                             <connections>
                                 <segue destination="TJJ-Bm-bZf" kind="presentation" identifier="addreminder" id="nCo-L7-w4h"/>
@@ -222,7 +222,7 @@
             </objects>
             <point key="canvasLocation" x="-34" y="281"/>
         </scene>
-        <!--New Reminder View Controller-->
+        <!--Configure Reminder-->
         <scene sceneID="ka1-ra-5wc">
             <objects>
                 <viewController id="12X-XK-2yN" customClass="NewReminderViewController" sceneMemberID="viewController">
@@ -313,7 +313,7 @@
                                     <constraint firstAttribute="width" constant="135" id="WAX-lt-7Pc"/>
                                     <constraint firstAttribute="height" constant="20" id="st6-fR-iZU"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -341,12 +341,12 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select Random Timer Settings" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pr1-Og-APa">
-                                <rect key="frame" x="68" y="244" width="240" height="30"/>
+                                <rect key="frame" x="58" y="244" width="260" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="Ija-ZA-dch"/>
-                                    <constraint firstAttribute="width" constant="240" id="owy-ae-X3t"/>
+                                    <constraint firstAttribute="width" constant="260" id="owy-ae-X3t"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -414,7 +414,7 @@
                             <constraint firstItem="io8-Yi-Li0" firstAttribute="top" secondItem="Pr1-Og-APa" secondAttribute="bottom" constant="10" id="xJT-eW-QP2"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="Qq7-2s-cDz">
+                    <navigationItem key="navigationItem" title="Configure Reminder" id="Qq7-2s-cDz">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="CGJ-Kf-u0w">
                             <connections>
                                 <action selector="cancelReminder:" destination="12X-XK-2yN" id="qx7-UF-8dD"/>
@@ -433,13 +433,14 @@
                         <outlet property="reminderTitle" destination="Mgt-Cy-EzO" id="mvV-dg-nt1"/>
                         <outlet property="startTime" destination="jt4-yU-XZY" id="jOA-kK-WJz"/>
                         <outlet property="timesPerDayLabel" destination="IuZ-Df-LQg" id="owZ-U6-oRY"/>
+                        <outlet property="timesPerDayStepper" destination="e1b-Cb-F65" id="iyZ-mI-CeT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Khd-vD-0wW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2301.5999999999999" y="277.51124437781112"/>
         </scene>
-        <!--Title-->
+        <!--Online Photos-->
         <scene sceneID="WMI-OL-ptY">
             <objects>
                 <viewController id="ykJ-bk-mGu" customClass="OnlinePhotosViewController" sceneMemberID="viewController">
@@ -494,7 +495,7 @@
                         </constraints>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Title" id="V2G-T1-e0U">
+                    <navigationItem key="navigationItem" title="Online Photos" id="V2G-T1-e0U">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="5Nj-Iw-MOM">
                             <connections>
                                 <action selector="cancelButton:" destination="ykJ-bk-mGu" id="Ehd-uw-5Fe"/>
