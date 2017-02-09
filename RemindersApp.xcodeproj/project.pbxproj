@@ -24,6 +24,12 @@
 		3CC86FCD1E4A8260000CFAD1 /* CollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CC86FCC1E4A8260000CFAD1 /* CollectionViewCell.m */; };
 		5DF565751E4AA44500E5ABC7 /* NotificationsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF565741E4AA44500E5ABC7 /* NotificationsManager.m */; };
 		A1B5DF8E1E4BDC7200B553F8 /* Reminders+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A1B5DF8C1E4BDC7200B553F8 /* Reminders+CoreDataProperties.m */; };
+		A1B5DF911E4CE87000B553F8 /* LabelStyling.m in Sources */ = {isa = PBXBuildFile; fileRef = A1B5DF901E4CE87000B553F8 /* LabelStyling.m */; };
+		A1B5DF941E4CF06D00B553F8 /* IntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1B5DF931E4CF06D00B553F8 /* IntroViewController.m */; };
+		A1B5DF971E4CF15E00B553F8 /* ImageViewStyling.m in Sources */ = {isa = PBXBuildFile; fileRef = A1B5DF961E4CF15E00B553F8 /* ImageViewStyling.m */; };
+		A1B5DF9A1E4CF18F00B553F8 /* ButtonStyling.m in Sources */ = {isa = PBXBuildFile; fileRef = A1B5DF991E4CF18F00B553F8 /* ButtonStyling.m */; };
+		A1B5DF9D1E4CF28A00B553F8 /* TextViewStyling.m in Sources */ = {isa = PBXBuildFile; fileRef = A1B5DF9C1E4CF28A00B553F8 /* TextViewStyling.m */; };
+		A1B5DFA01E4CF2B200B553F8 /* TextFieldStyling.m in Sources */ = {isa = PBXBuildFile; fileRef = A1B5DF9F1E4CF2B200B553F8 /* TextFieldStyling.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,6 +67,18 @@
 		5DF565731E4AA44500E5ABC7 /* NotificationsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationsManager.h; sourceTree = "<group>"; };
 		5DF565741E4AA44500E5ABC7 /* NotificationsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationsManager.m; sourceTree = "<group>"; };
 		A1B5DF8C1E4BDC7200B553F8 /* Reminders+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Reminders+CoreDataProperties.m"; sourceTree = "<group>"; };
+		A1B5DF8F1E4CE87000B553F8 /* LabelStyling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelStyling.h; sourceTree = "<group>"; };
+		A1B5DF901E4CE87000B553F8 /* LabelStyling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LabelStyling.m; sourceTree = "<group>"; };
+		A1B5DF921E4CF06D00B553F8 /* IntroViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroViewController.h; sourceTree = "<group>"; };
+		A1B5DF931E4CF06D00B553F8 /* IntroViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroViewController.m; sourceTree = "<group>"; };
+		A1B5DF951E4CF15E00B553F8 /* ImageViewStyling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageViewStyling.h; sourceTree = "<group>"; };
+		A1B5DF961E4CF15E00B553F8 /* ImageViewStyling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageViewStyling.m; sourceTree = "<group>"; };
+		A1B5DF981E4CF18F00B553F8 /* ButtonStyling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonStyling.h; sourceTree = "<group>"; };
+		A1B5DF991E4CF18F00B553F8 /* ButtonStyling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonStyling.m; sourceTree = "<group>"; };
+		A1B5DF9B1E4CF28A00B553F8 /* TextViewStyling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextViewStyling.h; sourceTree = "<group>"; };
+		A1B5DF9C1E4CF28A00B553F8 /* TextViewStyling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextViewStyling.m; sourceTree = "<group>"; };
+		A1B5DF9E1E4CF2B200B553F8 /* TextFieldStyling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextFieldStyling.h; sourceTree = "<group>"; };
+		A1B5DF9F1E4CF2B200B553F8 /* TextFieldStyling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextFieldStyling.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +133,16 @@
 				3CC86FC61E4A8223000CFAD1 /* OnlinePhotosViewController.m */,
 				3CC86FCB1E4A8260000CFAD1 /* CollectionViewCell.h */,
 				3CC86FCC1E4A8260000CFAD1 /* CollectionViewCell.m */,
+				A1B5DF8F1E4CE87000B553F8 /* LabelStyling.h */,
+				A1B5DF901E4CE87000B553F8 /* LabelStyling.m */,
+				A1B5DF951E4CF15E00B553F8 /* ImageViewStyling.h */,
+				A1B5DF961E4CF15E00B553F8 /* ImageViewStyling.m */,
+				A1B5DF981E4CF18F00B553F8 /* ButtonStyling.h */,
+				A1B5DF991E4CF18F00B553F8 /* ButtonStyling.m */,
+				A1B5DF9B1E4CF28A00B553F8 /* TextViewStyling.h */,
+				A1B5DF9C1E4CF28A00B553F8 /* TextViewStyling.m */,
+				A1B5DF9E1E4CF2B200B553F8 /* TextFieldStyling.h */,
+				A1B5DF9F1E4CF2B200B553F8 /* TextFieldStyling.m */,
 				3C42F2FD1E49185D0015F1FC /* Main.storyboard */,
 				3C42F3001E49185D0015F1FC /* RemindersApp.xcdatamodeld */,
 				3C42F2F41E49185D0015F1FC /* Supporting Files */,
@@ -131,6 +159,8 @@
 				3C42F3081E49185D0015F1FC /* Info.plist */,
 				3C42F2F71E49185D0015F1FC /* AppDelegate.h */,
 				3C42F2F81E49185D0015F1FC /* AppDelegate.m */,
+				A1B5DF921E4CF06D00B553F8 /* IntroViewController.h */,
+				A1B5DF931E4CF06D00B553F8 /* IntroViewController.m */,
 				3C42F2F51E49185D0015F1FC /* main.m */,
 			);
 			name = "Supporting Files";
@@ -220,14 +250,20 @@
 				3C42F31F1E4937730015F1FC /* DetailViewController.m in Sources */,
 				3CBBB6CB1E4BECB000CABFD2 /* Identifier+CoreDataProperties.m in Sources */,
 				5DF565751E4AA44500E5ABC7 /* NotificationsManager.m in Sources */,
+				A1B5DFA01E4CF2B200B553F8 /* TextFieldStyling.m in Sources */,
 				3C42F3101E49191E0015F1FC /* MasterTableViewController.m in Sources */,
 				3C42F31C1E4924A70015F1FC /* ReminderTableViewCell.m in Sources */,
 				A1B5DF8E1E4BDC7200B553F8 /* Reminders+CoreDataProperties.m in Sources */,
 				3C42F3131E491A590015F1FC /* NewReminderViewController.m in Sources */,
 				3C42F2F61E49185D0015F1FC /* main.m in Sources */,
 				3CC86FC71E4A8223000CFAD1 /* OnlinePhotosViewController.m in Sources */,
+				A1B5DF9A1E4CF18F00B553F8 /* ButtonStyling.m in Sources */,
+				A1B5DF911E4CE87000B553F8 /* LabelStyling.m in Sources */,
+				A1B5DF9D1E4CF28A00B553F8 /* TextViewStyling.m in Sources */,
+				A1B5DF941E4CF06D00B553F8 /* IntroViewController.m in Sources */,
 				3CC86FCA1E4A824B000CFAD1 /* Photo.m in Sources */,
 				3CBBB6CD1E4BECB000CABFD2 /* Reminders+CoreDataProperties.m in Sources */,
+				A1B5DF971E4CF15E00B553F8 /* ImageViewStyling.m in Sources */,
 				3CC86FCD1E4A8260000CFAD1 /* CollectionViewCell.m in Sources */,
 				3C42F3021E49185D0015F1FC /* RemindersApp.xcdatamodeld in Sources */,
 			);

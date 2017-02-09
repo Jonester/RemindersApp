@@ -1,27 +1,56 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C68" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Vth-vd-OHj">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
-        <scene sceneID="EHf-IW-A2E">
+        <scene sceneID="5Zm-Ia-7ek">
             <objects>
-                <viewController id="01J-lp-oVM" sceneMemberID="viewController">
+                <viewController id="Vth-vd-OHj" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Llm-lL-Icb"/>
-                        <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
+                        <viewControllerLayoutGuide type="top" id="3E7-VD-nhf"/>
+                        <viewControllerLayoutGuide type="bottom" id="pkl-WE-BFv"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                    <view key="view" contentMode="scaleToFill" id="6F9-wE-MPK">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="1486676708_email_notification_mail_alert_reminder_" translatesAutoresizingMaskIntoConstraints="NO" id="A5E-Of-YWA">
+                                <rect key="frame" x="67" y="233.5" width="240" height="256.5"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="remindom" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QJG-gn-yeN">
+                                <rect key="frame" x="72" y="130" width="231" height="42.5"/>
+                                <fontDescription key="fontDescription" name="Copperplate" family="Copperplate" pointSize="42"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.36449265480041504" green="0.85751050710678101" blue="0.9132038950920105" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="A5E-Of-YWA" secondAttribute="trailing" constant="52" id="6Hl-La-gdk"/>
+                            <constraint firstItem="A5E-Of-YWA" firstAttribute="top" secondItem="QJG-gn-yeN" secondAttribute="bottom" constant="61" id="Kj0-bc-0QQ"/>
+                            <constraint firstItem="QJG-gn-yeN" firstAttribute="leading" secondItem="6F9-wE-MPK" secondAttribute="leadingMargin" constant="56" id="M5X-XV-gcc"/>
+                            <constraint firstItem="pkl-WE-BFv" firstAttribute="top" secondItem="A5E-Of-YWA" secondAttribute="bottom" constant="177" id="Tpq-IJ-M8c"/>
+                            <constraint firstItem="A5E-Of-YWA" firstAttribute="top" secondItem="QJG-gn-yeN" secondAttribute="bottom" constant="61" id="dmB-E5-fGV"/>
+                            <constraint firstItem="A5E-Of-YWA" firstAttribute="leading" secondItem="6F9-wE-MPK" secondAttribute="leadingMargin" constant="51" id="lZZ-Jj-gg1"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="QJG-gn-yeN" secondAttribute="trailing" constant="56" id="mtp-ei-Fc7"/>
+                            <constraint firstItem="QJG-gn-yeN" firstAttribute="top" secondItem="3E7-VD-nhf" secondAttribute="bottom" constant="110" id="uen-Qk-ooH"/>
+                        </constraints>
                     </view>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="K5j-iU-P7p" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="-169" y="483"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="1486676708_email_notification_mail_alert_reminder_" width="512" height="512"/>
+    </resources>
 </document>
