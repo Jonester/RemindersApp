@@ -48,7 +48,7 @@
         self.reminder.image = [NSData dataWithData:UIImagePNGRepresentation(self.reminderImage.image)];
         self.reminder.displayFrequency = self.timesPerDayLabel.text.integerValue;
         self.reminder.uniqueID = [[NSUUID UUID]UUIDString];
-
+        
         self.reminderNew.startDate = self.startTime.date;
         self.reminderNew.endDate= self.endTime.date;
         
@@ -140,9 +140,9 @@
         // For Testing: NSDate *testDate = [NSDate dateWithTimeIntervalSinceNow:10];
         
         if (self.reminder == nil) {
-        UNNotificationRequest *request = [notificationsManager makeRequestFromReminderAndDateAndIdentifier:self.reminderNew date:scheduledTime identifer:identifierID];
-        [notificationsManager addToNotificationCenter:request];
-        NSLog(@"The new requests were sent");
+            UNNotificationRequest *request = [notificationsManager makeRequestFromReminderAndDateAndIdentifier:self.reminderNew date:scheduledTime identifer:identifierID];
+            [notificationsManager addToNotificationCenter:request];
+            NSLog(@"The new requests were sent");
         } else {
             UNNotificationRequest *request = [notificationsManager makeRequestFromReminderAndDateAndIdentifier:self.reminder date:scheduledTime identifer:identifierID];
             [notificationsManager addToNotificationCenter:request];
@@ -237,5 +237,5 @@
     [self.reminderImage setImage:photo.image];
     
     [self dismissViewControllerAnimated:YES completion:nil];
-    }
+}
 @end
