@@ -71,24 +71,24 @@
         
         self.context = [self getContext];
         
-        NSMutableArray *identifiers = [NSMutableArray new];
-        
-        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-
-        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Identifier" inManagedObjectContext:self.context];
-        [fetchRequest setEntity:entity];
-        
-        NSError *error = nil;
-        NSArray *fetchedObjects = [self.context executeFetchRequest:fetchRequest error:&error];
-        if (fetchedObjects == nil) {
-            NSLog(@"error: %@", error.localizedDescription);
-        }
-        
-        identifiers = [fetchedObjects mutableCopy];
-        
+//        NSMutableArray *identifiers = [NSMutableArray new];
+//        
+//        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+//
+//        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Identifier" inManagedObjectContext:self.context];
+//        [fetchRequest setEntity:entity];
+//        
+//        NSError *error = nil;
+//        NSArray *fetchedObjects = [self.context executeFetchRequest:fetchRequest error:&error];
+//        if (fetchedObjects == nil) {
+//            NSLog(@"error: %@", error.localizedDescription);
+//        }
+//        
+//        identifiers = [fetchedObjects mutableCopy];
+//        
 
         NSArray<Identifier*> *tempIdentifierArray = self.reminder.identifier.allObjects;
-        
+
         NSMutableArray<NSString*> *tempIDStringArray = [NSMutableArray new];
         
         for (Identifier* ident in tempIdentifierArray) {
