@@ -93,33 +93,6 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         
-        
-        
-//        NSMutableArray *notifications = [NSMutableArray new];
-//        
-//        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-//        
-//        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Identifier" inManagedObjectContext:self.context];
-//        [fetchRequest setEntity:entity];
-//        
-//        NSError *error = nil;
-//        NSArray *fetchedObjects = [self.context executeFetchRequest:fetchRequest error:&error];
-//        if (fetchedObjects == nil) {
-//            NSLog(@"error: %@", error.localizedDescription);
-//        }
-//        notifications = [fetchedObjects mutableCopy];
-        
-//        for (Identifier *identifier in notifications) {
-//            [self.context deleteObject:identifier];
-//        }
-//        
-//        [notifications removeAllObjects];
-        
-       // [[self appDelegate] saveContext];
-        
-        
-        
-        // RR: COPIED CODE
         Reminders *reminderTry = self.remindersArray[indexPath.row];
 
         self.context = [self getContext];

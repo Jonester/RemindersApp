@@ -54,6 +54,11 @@
         self.reminderTitle.text = self.reminder.title;
         self.timesPerDayLabel.text = @(self.reminder.displayFrequency).stringValue;
         self.timesPerDayStepper.value = self.reminder.displayFrequency;
+        NSString *imagePath = self.reminder.imagePath;
+        NSString *imageName = imagePath.lastPathComponent;
+        NSString *documentDirPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+        NSString *filePath = [documentDirPath stringByAppendingPathComponent:imageName];
+        self.reminderImage.image = [UIImage imageWithContentsOfFile:filePath];
     }
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self

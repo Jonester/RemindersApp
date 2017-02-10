@@ -47,7 +47,15 @@
     
     self.detailTitle.text = self.reminder.title;
     self.detailDetails.text = self.reminder.details;
-    self.detailImage.image = [UIImage imageWithContentsOfFile:self.reminder.imagePath];
+    
+    
+    NSString *imagePath = self.reminder.imagePath;
+    NSString *imageName = imagePath.lastPathComponent;
+    NSString *documentDirPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+    NSString *filePath = [documentDirPath stringByAppendingPathComponent:imageName];
+    self.detailImage.image = [UIImage imageWithContentsOfFile:filePath];
+    
+//    self.detailImage.image = [UIImage imageWithContentsOfFile:self.reminder.imagePath];
     self.timesPerDayLabel.text = [NSString stringWithFormat:@"Times Per Day: %@", @(self.reminder.displayFrequency).stringValue];
     self.startTimeLabel.text  = [NSString stringWithFormat:@"Between: %@", startTimeString];
     self.endTimeLabel.text = [NSString stringWithFormat:@"End: %@", endTimeString];
