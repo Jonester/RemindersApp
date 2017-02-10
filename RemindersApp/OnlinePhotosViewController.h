@@ -12,7 +12,7 @@
 
 @protocol OnlinePhotosViewControllerDelegate;
 
-@interface OnlinePhotosViewController : UIViewController
+@interface OnlinePhotosViewController : UIViewController <UITextFieldDelegate>
 
 @property (nonatomic) Photo *photo;
 @property (nonatomic, weak) id<OnlinePhotosViewControllerDelegate>delegate;

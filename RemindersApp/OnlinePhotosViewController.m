@@ -28,7 +28,12 @@
     NSURLComponents *comps = [NSURLComponents componentsWithString:@"https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=274d899f647849f684a98a2c86588897&tags=landscape&safe_search=1&extras=url_m&per_page=50&format=json&nojsoncallback=1"];
     
     [self configureURL:comps.URL];
-    
+    self.searchTextField.delegate = self;
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
 }
 
 -(void)configureURL:(NSURL *)url {
