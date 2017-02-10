@@ -80,8 +80,11 @@
     Reminders *reminderObject = self.remindersArray[indexPath.row];
     cell.titleLabel.text = reminderObject.title;
     cell.detailsLabel.text = reminderObject.details;
-    cell.imageThumbnail.image = [UIImage imageWithContentsOfFile:reminderObject.imagePath];
-
+    NSString *imagePath = reminderObject.imagePath;
+    NSString *imageName = imagePath.lastPathComponent;
+    NSString *documentDirPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+    NSString *filePath = [documentDirPath stringByAppendingPathComponent:imageName];
+    cell.imageThumbnail.image = [UIImage imageWithContentsOfFile:filePath];
     
     return cell;
 }
