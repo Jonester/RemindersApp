@@ -80,8 +80,11 @@
     Reminders *reminderObject = self.remindersArray[indexPath.row];
     cell.titleLabel.text = reminderObject.title;
     cell.detailsLabel.text = reminderObject.details;
-    cell.imageThumbnail.image = [UIImage imageWithContentsOfFile:reminderObject.imagePath];
-
+    NSString *imagePath = reminderObject.imagePath;
+    NSString *imageName = imagePath.lastPathComponent;
+    NSString *documentDirPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+    NSString *filePath = [documentDirPath stringByAppendingPathComponent:imageName];
+    cell.imageThumbnail.image = [UIImage imageWithContentsOfFile:filePath];
     
     return cell;
 }
@@ -90,33 +93,6 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         
-        
-        
-//        NSMutableArray *notifications = [NSMutableArray new];
-//        
-//        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-//        
-//        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Identifier" inManagedObjectContext:self.context];
-//        [fetchRequest setEntity:entity];
-//        
-//        NSError *error = nil;
-//        NSArray *fetchedObjects = [self.context executeFetchRequest:fetchRequest error:&error];
-//        if (fetchedObjects == nil) {
-//            NSLog(@"error: %@", error.localizedDescription);
-//        }
-//        notifications = [fetchedObjects mutableCopy];
-        
-//        for (Identifier *identifier in notifications) {
-//            [self.context deleteObject:identifier];
-//        }
-//        
-//        [notifications removeAllObjects];
-        
-       // [[self appDelegate] saveContext];
-        
-        
-        
-        // RR: COPIED CODE
         Reminders *reminderTry = self.remindersArray[indexPath.row];
 
         self.context = [self getContext];
