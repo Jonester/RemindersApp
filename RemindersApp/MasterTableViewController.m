@@ -36,7 +36,7 @@
     [NotificationsManager SetupAndAskUserPermissions];
     
     
-    [super viewDidLoad];
+ //   [super viewDidLoad];
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     self.context = [self getContext];
@@ -56,8 +56,9 @@
 
 
 -(void)viewWillAppear:(BOOL)animated {
-    
-    [self.tableView reloadData];
+    [super viewWillAppear:animated];
+    [self newReminderViewControllerDidAdd];
+//    [self.tableView reloadData];
 }
 
 
@@ -82,7 +83,7 @@
     cell.detailsLabel.text = reminderObject.details;
     cell.imageThumbnail.image = [UIImage imageWithContentsOfFile:reminderObject.imagePath];
 
-    
+    NSLog(@"image path: %@", reminderObject.imagePath);
     return cell;
 }
 
@@ -191,7 +192,7 @@
     self.remindersArray = [fetchedObjects mutableCopy];
     
     [self.tableView reloadData];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    //[self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (NSManagedObjectContext *)getContext {

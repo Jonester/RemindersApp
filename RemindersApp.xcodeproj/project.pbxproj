@@ -23,11 +23,11 @@
 		5D48351F1E4C042D00ED35EE /* NotificationsDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D48351E1E4C042D00ED35EE /* NotificationsDelegate.m */; };
 		5D4835291E4CB91300ED35EE /* Reminders+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D4835231E4CB91300ED35EE /* Reminders+CoreDataProperties.m */; };
 		5D48352B1E4CB91300ED35EE /* Identifier+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D4835271E4CB91300ED35EE /* Identifier+CoreDataProperties.m */; };
+		5D48352E1E4D3F0F00ED35EE /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D48352D1E4D3F0F00ED35EE /* ViewController.m */; };
 		5DF565751E4AA44500E5ABC7 /* NotificationsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF565741E4AA44500E5ABC7 /* NotificationsManager.m */; };
 		A1B5DF8E1E4BDC7200B553F8 /* Reminders+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A1B5DF8C1E4BDC7200B553F8 /* Reminders+CoreDataProperties.m */; };
 		A1B5DF911E4CE87000B553F8 /* LabelStyling.m in Sources */ = {isa = PBXBuildFile; fileRef = A1B5DF901E4CE87000B553F8 /* LabelStyling.m */; };
 		A1B5DF941E4CF06D00B553F8 /* IntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1B5DF931E4CF06D00B553F8 /* IntroViewController.m */; };
-		A1B5DF971E4CF15E00B553F8 /* ImageViewStyling.m in Sources */ = {isa = PBXBuildFile; fileRef = A1B5DF961E4CF15E00B553F8 /* ImageViewStyling.m */; };
 		A1B5DF9A1E4CF18F00B553F8 /* ButtonStyling.m in Sources */ = {isa = PBXBuildFile; fileRef = A1B5DF991E4CF18F00B553F8 /* ButtonStyling.m */; };
 		A1B5DF9D1E4CF28A00B553F8 /* TextViewStyling.m in Sources */ = {isa = PBXBuildFile; fileRef = A1B5DF9C1E4CF28A00B553F8 /* TextViewStyling.m */; };
 		A1B5DFA01E4CF2B200B553F8 /* TextFieldStyling.m in Sources */ = {isa = PBXBuildFile; fileRef = A1B5DF9F1E4CF2B200B553F8 /* TextFieldStyling.m */; };
@@ -67,6 +67,8 @@
 		5D4835251E4CB91300ED35EE /* Identifier+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Identifier+CoreDataClass.m"; sourceTree = "<group>"; };
 		5D4835261E4CB91300ED35EE /* Identifier+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Identifier+CoreDataProperties.h"; sourceTree = "<group>"; };
 		5D4835271E4CB91300ED35EE /* Identifier+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Identifier+CoreDataProperties.m"; sourceTree = "<group>"; };
+		5D48352C1E4D3F0F00ED35EE /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		5D48352D1E4D3F0F00ED35EE /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		5DF565731E4AA44500E5ABC7 /* NotificationsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationsManager.h; sourceTree = "<group>"; };
 		5DF565741E4AA44500E5ABC7 /* NotificationsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationsManager.m; sourceTree = "<group>"; };
 		A1B5DF8C1E4BDC7200B553F8 /* Reminders+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Reminders+CoreDataProperties.m"; sourceTree = "<group>"; };
@@ -146,6 +148,8 @@
 				A1B5DF9C1E4CF28A00B553F8 /* TextViewStyling.m */,
 				A1B5DF9E1E4CF2B200B553F8 /* TextFieldStyling.h */,
 				A1B5DF9F1E4CF2B200B553F8 /* TextFieldStyling.m */,
+				5D48352C1E4D3F0F00ED35EE /* ViewController.h */,
+				5D48352D1E4D3F0F00ED35EE /* ViewController.m */,
 				3C42F2FD1E49185D0015F1FC /* Main.storyboard */,
 				3C42F3001E49185D0015F1FC /* RemindersApp.xcdatamodeld */,
 				3C42F2F41E49185D0015F1FC /* Supporting Files */,
@@ -211,6 +215,7 @@
 				TargetAttributes = {
 					3C42F2F01E49185D0015F1FC = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = YL4ZK39CA7;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -251,6 +256,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D48352E1E4D3F0F00ED35EE /* ViewController.m in Sources */,
 				3C42F2F91E49185D0015F1FC /* AppDelegate.m in Sources */,
 				3C42F31F1E4937730015F1FC /* DetailViewController.m in Sources */,
 				5DF565751E4AA44500E5ABC7 /* NotificationsManager.m in Sources */,
@@ -388,6 +394,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = YL4ZK39CA7;
 				INFOPLIST_FILE = RemindersApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = CRJ.RemindersApp;
@@ -399,6 +406,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = YL4ZK39CA7;
 				INFOPLIST_FILE = RemindersApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = CRJ.RemindersApp;

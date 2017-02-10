@@ -141,7 +141,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="96"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iSD-0W-Qw3" id="qU8-MJ-LYg">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="95"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="95.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FxT-Xn-g3a" customClass="ImageViewStyling">
@@ -613,7 +613,7 @@
                                     <color key="titleColor" red="0.23017263412475586" green="0.67096513509750366" blue="0.95836383104324341" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="0kN-vB-avC" kind="presentation" id="vTx-Xy-eH4"/>
+                                    <segue destination="0kN-vB-avC" kind="presentation" id="O9l-0A-KUG"/>
                                 </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Keep your life on track and your mind at ease by letting me remind you of your daily tasks throughout the day." textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UNl-pu-g7j">
@@ -648,7 +648,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k5L-hM-kr3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-796" y="270"/>
+            <point key="canvasLocation" x="-838" y="280"/>
         </scene>
     </scenes>
     <resources>

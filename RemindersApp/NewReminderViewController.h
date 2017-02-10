@@ -13,7 +13,7 @@
 
 
 
-@interface NewReminderViewController : UIViewController <UITextViewDelegate>
+@interface NewReminderViewController : UIViewController <UITextViewDelegate, UITextFieldDelegate>
 
 @property (weak, nonatomic) id<NewReminderViewControllerDelegate>delegate;
 

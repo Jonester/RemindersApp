@@ -51,20 +51,32 @@
         self.reminderTitle.text = self.reminder.title;
         self.timesPerDayLabel.text = @(self.reminder.displayFrequency).stringValue;
         self.timesPerDayStepper.value = self.reminder.displayFrequency;
+        self.reminderImage.image = [UIImage imageWithContentsOfFile:self.reminder.imagePath];
     }
+    
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(keyboardDidHide:)];
+    [self.view addGestureRecognizer:tapGesture];
 }
 
 
+-(void)keyboardDidHide:(UITapGestureRecognizer *)tapGesture {
+    [self.reminderTitle resignFirstResponder];
+}
+
 - (NSString*)saveImage:(UIImage*)toSave {
     NSString *documentDirPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
-    NSString *imageName = [NSString stringWithFormat:@"%@.jpg", [NSUUID new]];
+    NSString *imageName = [NSString stringWithFormat:@"%@.jpeg", [NSUUID new]];
     NSString *filePath = [documentDirPath stringByAppendingPathComponent:imageName];
     NSData *imageData = UIImageJPEGRepresentation(toSave, 0.3);
     // May want to consider scaling image down to reduce file size
     // http://stackoverflow.com/questions/36624195/effective-way-to-generate-thumbnail-from-uiimage
     
-    [imageData writeToFile:filePath atomically:YES];
-    return filePath;
+    if([imageData writeToFile:filePath atomically:YES]) {
+        return filePath;
+    } else {
+        NSLog(@"Failed to save image");
+        return nil;
+    }
 }
 
 
@@ -94,30 +106,30 @@
 //
 //        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Identifier" inManagedObjectContext:self.context];
 //        [fetchRequest setEntity:entity];
-//        
-//        NSError *error = nil;
-//        NSArray *fetchedObjects = [self.context executeFetchRequest:fetchRequest error:&error];
-//        if (fetchedObjects == nil) {
-//            NSLog(@"error: %@", error.localizedDescription);
-//        }
-//        
-//        identifiers = [fetchedObjects mutableCopy];
-//        
-
+        //
+        //        NSError *error = nil;
+        //        NSArray *fetchedObjects = [self.context executeFetchRequest:fetchRequest error:&error];
+        //        if (fetchedObjects == nil) {
+        //            NSLog(@"error: %@", error.localizedDescription);
+        //        }
+        //
+        //        identifiers = [fetchedObjects mutableCopy];
+        //
+        
         NSArray<Identifier*> *tempIdentifierArray = self.reminder.identifier.allObjects;
-
+        
         NSMutableArray<NSString*> *tempIDStringArray = [NSMutableArray new];
         
         for (Identifier* ident in tempIdentifierArray) {
             [tempIDStringArray addObject:ident.scheduleIdentifier];
         };
-    
+        
         
         UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
         [center removePendingNotificationRequestsWithIdentifiers:tempIDStringArray];
         
-       [self.reminder removeIdentifier:self.reminder.identifier];
-
+        [self.reminder removeIdentifier:self.reminder.identifier];
+        
         [[self appDelegate] saveContext];
         
         
@@ -144,10 +156,7 @@
         self.reminderNew.imagePath = [self saveImage:image];
         
         
-        NSError *error = nil;
-        if (![context save:&error]) {
-            NSLog(@"Save Failed: %@", error.localizedDescription);
-        }
+        [[self appDelegate] saveContext];
     }
     
     // ADD TO NOTIFICATIONS CENTER

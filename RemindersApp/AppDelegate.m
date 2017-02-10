@@ -30,8 +30,8 @@
     
     
     // Override point for customization after application launch.
-    if([[NSUserDefaults standardUserDefaults] boolForKey:@"FirstLaunch"]) {
-        
+    if([[NSUserDefaults standardUserDefaults] boolForKey:@"FirstLaunch"]){
+    
     } else {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"FirstLaunch"];
         [[NSUserDefaults standardUserDefaults] synchronize];
